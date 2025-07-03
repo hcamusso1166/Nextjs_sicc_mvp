@@ -23,22 +23,53 @@ export default async function CustomersSICCTable({
               <table className="min-w-full text-gray-900">
                 <thead className="rounded-md bg-gray-50 text-left text-sm font-normal">
                   <tr>
-                    <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
-                      ID
+                    
+                    <th scope="col" className="px-3 py-5 font-medium">
+                      Estado
                     </th>
                     <th scope="col" className="px-3 py-5 font-medium">
                       Nombre
+                    </th>
+                    <th scope="col" className="px-3 py-5 font-medium">
+                      CUIT
+                    </th>
+                    <th scope="col" className="px-3 py-5 font-medium">
+                      Contacto
+                    </th>
+                    <th scope="col" className="px-3 py-5 font-medium">
+                      Mail
+                    </th>
+                    <th scope="col" className="px-3 py-5 font-medium">
+                      Tel
+                    </th>
+                    <th scope="col" className="px-3 py-5 font-medium">
+                      Mail Notif
                     </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 text-gray-900 bg-white">
                   {customers.map((customer: DirectusCustomer) => (
                     <tr key={customer.id} className="group">
-                      <td className="whitespace-nowrap py-5 pl-6 pr-3 text-sm">
-                        {customer.id}
+                      <td className="whitespace-nowrap px-3 py-5 text-sm">
+                        {customer.status}
                       </td>
                       <td className="whitespace-nowrap px-3 py-5 text-sm">
                         {customer.name}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-5 text-sm">
+                        {customer.CUIT}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-5 text-sm">
+                        {customer.contacto}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-5 text-sm">
+                        {customer.mail}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-5 text-sm">
+                        {customer.tel}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-5 text-sm">
+                        {customer.mailNotif}
                       </td>
                     </tr>
                   ))}
