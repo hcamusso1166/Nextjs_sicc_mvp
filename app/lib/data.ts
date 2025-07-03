@@ -120,6 +120,18 @@ export async function fetchFilteredInvoices(
     throw new Error('Failed to fetch invoices.');
   }
 }
+export async function getCustomersSICC(query = "", currentPage = 1) {
+  const url = `https://vps-4233212-x.dattaweb.com/items/Clientes?sort=name${query || ""}&page=${currentPage}&limit=${ITEMS_PER_PAGE}`
+  try {
+    const res = await fetch(url)
+    if (!res.ok) throw new Error("Error al obtener clientes")
+    const data = await res.json()
+    return data.data
+  } catch (err) {
+    console.error("Error al hacer fetch de clientes:", err)
+    return []
+  }
+}
 
 export async function fetchInvoicesPages(query: string) {
   try {
