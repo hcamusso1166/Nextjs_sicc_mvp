@@ -15,7 +15,7 @@ export type Customer = {
   email: string;
   image_url: string;
 };
-export type CustomerSICC = {
+export interface DirectusCustomer {
   id: string;
   status: string;
   name: string;
@@ -28,8 +28,18 @@ export type CustomerSICC = {
   contacto: string;
   mail: string;
   tel: string;
-  mailNotif: string
-};
+    mailNotif: string;
+}
+
+export type CustomerSICC = DirectusCustomer;
+
+export interface DirectusListResponse<T> {
+  data: T[];
+  meta?: {
+    filter_count?: number;
+    [key: string]: unknown;
+  };
+}
 
 export type Invoice = {
   id: string;

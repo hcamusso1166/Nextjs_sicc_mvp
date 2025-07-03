@@ -1,6 +1,7 @@
 import { lusitana } from '@/app/ui/fonts';
 import Search from '@/app/ui/search';
-import { getCustomersSICC  } from '@/app/lib/data';
+import { getCustomersSICC } from '@/app/lib/data';
+import { DirectusCustomer } from '@/app/lib/definitions';
 
 export default async function CustomersSICCTable({
   query,
@@ -9,7 +10,7 @@ export default async function CustomersSICCTable({
   query: string;
   currentPage: number;
 }) {
-  const customers = await getCustomersSICC(query, currentPage);
+  const customers = await getCustomersSICC<DirectusCustomer>(query, currentPage);
 
   return (
     <div className="w-full">
@@ -31,7 +32,7 @@ export default async function CustomersSICCTable({
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 text-gray-900 bg-white">
-                  {customers.map((customer: any) => (
+                  {customers.map((customer: DirectusCustomer) => (
                     <tr key={customer.id} className="group">
                       <td className="whitespace-nowrap py-5 pl-6 pr-3 text-sm">
                         {customer.id}
