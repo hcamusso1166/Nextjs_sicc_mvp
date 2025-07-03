@@ -15,6 +15,21 @@ export type Customer = {
   email: string;
   image_url: string;
 };
+export type CustomerSICC = {
+  id: string;
+  status: string;
+  name: string;
+  urlSlug: string;
+  CUIT: string;
+  calle: string;
+  nro: number;
+  piso: number;
+  dpto: string;
+  contacto: string;
+  mail: string;
+  tel: string;
+  mailNotif: string
+};
 
 export type Invoice = {
   id: string;

@@ -6,10 +6,13 @@ import {
   InvoicesTable,
   LatestInvoiceRaw,
   Revenue,
+  CustomerSICC,
 } from './definitions';
 import { formatCurrency } from './utils';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
+export const DIRECTUS_URL =
+  process.env.DIRECTUS_URL || 'https://vps-4233212-x.dattaweb.com';
 
 export async function fetchRevenue() {
   try {
@@ -120,18 +123,32 @@ export async function fetchFilteredInvoices(
     throw new Error('Failed to fetch invoices.');
   }
 }
-export async function getCustomersSICC(query = "", currentPage = 1) {
-  const url = `https://vps-4233212-x.dattaweb.com/items/Clientes?sort=name${query || ""}&page=${currentPage}&limit=${ITEMS_PER_PAGE}`
+export async function getCustomersSICC(query = "", currentPage = 1) : Promise<CustomerSICC[]> {
+ const url = `${DIRECTUS_URL}/items/Clientes?page=${currentPage}&limit=${ITEMS_PER_PAGE}&sort=name${query ? `&filter[name][_contains]=${encodeURIComponent(query)}` : ''}`;
   try {
     const res = await fetch(url)
     if (!res.ok) throw new Error("Error al obtener clientes")
     const data = await res.json()
-    return data.data
+    return data.data as CustomerSICC[]
   } catch (err) {
     console.error("Error al hacer fetch de clientes:", err)
     return []
   }
 }
+export async function fetchCustomersSICCPages(query = "") {
+  const url = `${DIRECTUS_URL}/items/Clientes?limit=1&meta=filter_count${query ? `&filter[name][_contains]=${encodeURIComponent(query)}` : ''}`;
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('Error al obtener total de clientes');
+    const data = await res.json();
+    const count = data?.meta?.filter_count ?? 0;
+    return Math.ceil(count / ITEMS_PER_PAGE);
+  } catch (err) {
+    console.error('Error al hacer fetch de paginas de clientes:', err);
+    return 0;
+  }
+}
+
 
 export async function fetchInvoicesPages(query: string) {
   try {
