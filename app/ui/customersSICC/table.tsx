@@ -1,5 +1,5 @@
 import { lusitana } from '@/app/ui/fonts';
-import { DeleteCustomerSICC } from '@/app/ui/customersSICC/buttons';
+import { DeleteCustomerSICC, UpdateCustomerSICC } from '@/app/ui/customersSICC/buttons';
 import { getCustomersSICC } from '@/app/lib/data';
 import { DirectusCustomer } from '@/app/lib/definitions';
 
@@ -43,7 +43,7 @@ export default async function CustomersSICCTable({
                       Mail Notif
                     </th>
                     <th scope="col" className="relative py-5 pl-3 pr-3">
-                      <span className="sr-only">Delete</span>
+                      <span className="sr-only">Acciones</span>
                     </th>
                   </tr>
                 </thead>
@@ -68,18 +68,20 @@ export default async function CustomersSICCTable({
                       <td className="whitespace-nowrap px-3 py-5 text-sm">
                         {customer.tel}
                       </td>
-                      <td className="whitespace-nowrap px-3 py-5 text-sm">
+                     <td className="whitespace-nowrap px-3 py-5 text-sm">
                       {customer.mailNotif}
                     </td>
                     <td className="whitespace-nowrap py-5 pl-3 pr-3">
-                      <DeleteCustomerSICC id={customer.id} />
+                      <div className="flex justify-end gap-3">
+                        <UpdateCustomerSICC id={customer.id} />
+                        <DeleteCustomerSICC id={customer.id} />
+                      </div>
                     </td>
                   </tr>
                 ))}
               </tbody>
               </table>
             </div>
-
         </div>
       </div>
     </div>

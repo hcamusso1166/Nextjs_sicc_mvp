@@ -50,21 +50,47 @@ export async function updateInvoice(id: string, formData: FormData) {
   revalidatePath('/dashboard/invoices');
   redirect('/dashboard/invoices');
 }
+
 import { DIRECTUS_URL } from './data';
 
 export async function createCustomerSICC(formData: FormData) {
+  const name = String(formData.get('name') || '');
   const body = {
     status: formData.get('status'),
-    name: formData.get('name'),
+    name,
     CUIT: formData.get('CUIT'),
     contacto: formData.get('contacto'),
     mail: formData.get('mail'),
     tel: formData.get('tel'),
     mailNotif: formData.get('mailNotif'),
+    urlSlug: slugify(name),
   };
 
   await fetch(`${DIRECTUS_URL}/items/Clientes`, {
     method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+
+  revalidatePath('/dashboard/customersSICC');
+  redirect('/dashboard/customersSICC');
+}
+
+export async function updateCustomerSICC(id: string, formData: FormData) {
+  const name = String(formData.get('name') || '');
+  const body = {
+    status: formData.get('status'),
+    name,
+    CUIT: formData.get('CUIT'),
+    contacto: formData.get('contacto'),
+    mail: formData.get('mail'),
+    tel: formData.get('tel'),
+    mailNotif: formData.get('mailNotif'),
+    urlSlug: slugify(name),
+  };
+
+  await fetch(`${DIRECTUS_URL}/items/Clientes/${id}`, {
+    method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   });
