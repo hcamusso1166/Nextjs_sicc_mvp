@@ -102,4 +102,5 @@ export async function updateCustomerSICC(id: string, formData: FormData) {
 export async function deleteCustomerSICC(id: string) {
   await fetch(`${DIRECTUS_URL}/items/Clientes/${id}`, { method: 'DELETE' });
   revalidatePath('/dashboard/customersSICC');
+  redirect('/dashboard/customersSICC');
 }

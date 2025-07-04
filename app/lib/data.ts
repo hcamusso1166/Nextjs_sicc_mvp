@@ -130,7 +130,7 @@ export async function getCustomersSICC<T extends DirectusCustomer = DirectusCust
 ): Promise<T[]> {
   const url = `${DIRECTUS_URL}/items/Clientes?page=${currentPage}&limit=${ITEMS_PER_PAGE}&sort=name${query ? `&filter[name][_contains]=${encodeURIComponent(query)}` : ''}`;
   try {
-    const res = await fetch(url);
+        const res = await fetch(url, { cache: 'no-store' });
     if (!res.ok) throw new Error("Error al obtener clientes");
     const data: DirectusListResponse<T> = await res.json();
     return data.data;
@@ -139,9 +139,10 @@ export async function getCustomersSICC<T extends DirectusCustomer = DirectusCust
     return [];
   }
 }
+
 export async function fetchCustomerSICCById<T extends DirectusCustomer = DirectusCustomer>(id: string): Promise<T | null> {
   try {
-    const res = await fetch(`${DIRECTUS_URL}/items/Clientes/${id}`);
+    const res = await fetch(`${DIRECTUS_URL}/items/Clientes/${id}`, { cache: 'no-store' });
     if (!res.ok) throw new Error('Error al obtener cliente');
     const data: { data: T } = await res.json();
     return data.data;
@@ -154,7 +155,7 @@ export async function fetchCustomerSICCById<T extends DirectusCustomer = Directu
 export async function fetchCustomersSICCPages<T extends DirectusCustomer = DirectusCustomer>(query = "") {
   const url = `${DIRECTUS_URL}/items/Clientes?limit=1&meta=filter_count${query ? `&filter[name][_contains]=${encodeURIComponent(query)}` : ''}`;
   try {
-    const res = await fetch(url);
+    const res = await fetch(url, { cache: 'no-store' });
     if (!res.ok) throw new Error('Error al obtener total de clientes');
     const data: DirectusListResponse<T> = await res.json();
     const count = data?.meta?.filter_count ?? 0;
