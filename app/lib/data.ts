@@ -13,7 +13,7 @@ import { formatCurrency } from './utils';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 export const DIRECTUS_URL =
-  process.env.DIRECTUS_URL || 'https://vps-4233212-x.dattaweb.com';
+  process.env.DIRECTUS_URL || 'https://tto.com.ar';
 
 export async function fetchRevenue() {
   try {

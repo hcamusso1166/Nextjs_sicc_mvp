@@ -1,5 +1,5 @@
 import { lusitana } from '@/app/ui/fonts';
-import Search from '@/app/ui/search';
+import { DeleteCustomerSICC } from '@/app/ui/customersSICC/buttons';
 import { getCustomersSICC } from '@/app/lib/data';
 import { DirectusCustomer } from '@/app/lib/definitions';
 
@@ -13,14 +13,11 @@ export default async function CustomersSICCTable({
   const customers = await getCustomersSICC<DirectusCustomer>(query, currentPage);
 
   return (
-    <div className="w-full">
-      <h1 className={`${lusitana.className} mb-8 text-xl md:text-2xl`}>Clientes</h1>
-      <Search placeholder="Buscar clientes..." />
-      <div className="mt-6 flow-root">
-        <div className="overflow-x-auto">
-          <div className="inline-block min-w-full align-middle">
-            <div className="overflow-hidden rounded-md bg-gray-50 p-2 md:pt-0">
-              <table className="min-w-full text-gray-900">
+    <div className="mt-6 flow-root">
+      <div className="overflow-x-auto">
+        <div className="inline-block min-w-full align-middle">
+          <div className="overflow-hidden rounded-md bg-gray-50 p-2 md:pt-0">
+            <table className="min-w-full text-gray-900">
                 <thead className="rounded-md bg-gray-50 text-left text-sm font-normal">
                   <tr>
                     
@@ -44,6 +41,9 @@ export default async function CustomersSICCTable({
                     </th>
                     <th scope="col" className="px-3 py-5 font-medium">
                       Mail Notif
+                    </th>
+                    <th scope="col" className="relative py-5 pl-3 pr-3">
+                      <span className="sr-only">Delete</span>
                     </th>
                   </tr>
                 </thead>
@@ -69,14 +69,17 @@ export default async function CustomersSICCTable({
                         {customer.tel}
                       </td>
                       <td className="whitespace-nowrap px-3 py-5 text-sm">
-                        {customer.mailNotif}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
+                      {customer.mailNotif}
+                    </td>
+                    <td className="whitespace-nowrap py-5 pl-3 pr-3">
+                      <DeleteCustomerSICC id={customer.id} />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
               </table>
             </div>
-          </div>
+
         </div>
       </div>
     </div>
