@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import Pagination from '@/app/ui/customersSICC/pagination';
 import CustomersSICCTable from '@/app/ui/customersSICC/table';
 import { CreateCustomerSICC } from '@/app/ui/customersSICC/buttons';
