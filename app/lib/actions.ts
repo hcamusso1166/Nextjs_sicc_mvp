@@ -72,7 +72,7 @@ export async function createCustomerSICC(formData: FormData) {
     body: JSON.stringify(body),
   });
 
-  revalidatePath('/dashboard/customersSICC');
+  revalidatePath('/dashboard/customersSICC', 'page');
   redirect('/dashboard/customersSICC');
 }
 
@@ -94,13 +94,13 @@ export async function updateCustomerSICC(id: string, formData: FormData) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   });
-
-  revalidatePath('/dashboard/customersSICC');
+  
+  revalidatePath('/dashboard/customersSICC', 'page');
   redirect('/dashboard/customersSICC');
 }
 
 export async function deleteCustomerSICC(id: string) {
   await fetch(`${DIRECTUS_URL}/items/Clientes/${id}`, { method: 'DELETE' });
-  revalidatePath('/dashboard/customersSICC');
+  revalidatePath('/dashboard/customersSICC', 'page');
   redirect('/dashboard/customersSICC');
 }
