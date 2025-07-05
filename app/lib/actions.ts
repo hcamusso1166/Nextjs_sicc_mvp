@@ -66,22 +66,15 @@ export async function createCustomerSICC(formData: FormData) {
     urlSlug: slugify(name),
   };
 
-  const response = await fetch(`${DIRECTUS_URL}/items/Clientes`, {
+ await fetch(`${DIRECTUS_URL}/items/Clientes`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   });
-  if (!response.ok) {
-  console.error('Failed to create customer in Directus', await response.text());
-  throw new Error('Failed to create customer in Directus');
-}
-if (response.ok) {
-  console.log('Create OK customer in Directus', await response.text());
-  throw new Error('Failed to create customer in Directus');
-}
+  
   revalidateTag('customersSICC');
-  revalidatePath('/dashboard/customersSICC', 'page');
-  redirect('/dashboard/customersSICC');
+  revalidatePath('/dashboard/customersSICC');
+  return redirect('/dashboard/customersSICC');
 }
 
 export async function updateCustomerSICC(id: string, formData: FormData) {
@@ -103,13 +96,13 @@ export async function updateCustomerSICC(id: string, formData: FormData) {
     body: JSON.stringify(body),
   });
   revalidateTag('customersSICC');
-  revalidatePath('/dashboard/customersSICC', 'page');
-  redirect('/dashboard/customersSICC');
+  revalidatePath('/dashboard/customersSICC');
+  return redirect('/dashboard/customersSICC');
 }
 
 export async function deleteCustomerSICC(id: string) {
   await fetch(`${DIRECTUS_URL}/items/Clientes/${id}`, { method: 'DELETE' });
   revalidateTag('customersSICC');
-  revalidatePath('/dashboard/customersSICC', 'page');
-  redirect('/dashboard/customersSICC');
+  revalidatePath('/dashboard/customersSICC' );
+  return redirect('/dashboard/customersSICC');
 }
