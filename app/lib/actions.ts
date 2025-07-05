@@ -1,7 +1,7 @@
 'use server';
 
 import { z } from 'zod';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { redirect } from 'next/navigation';
 import postgres from 'postgres';
 import { slugify } from './utils';
@@ -71,7 +71,7 @@ export async function createCustomerSICC(formData: FormData) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   });
-
+  revalidateTag('customersSICC');
   revalidatePath('/dashboard/customersSICC', 'page');
   redirect('/dashboard/customersSICC');
 }
@@ -94,13 +94,14 @@ export async function updateCustomerSICC(id: string, formData: FormData) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   });
-  
+  revalidateTag('customersSICC');
   revalidatePath('/dashboard/customersSICC', 'page');
   redirect('/dashboard/customersSICC');
 }
 
 export async function deleteCustomerSICC(id: string) {
   await fetch(`${DIRECTUS_URL}/items/Clientes/${id}`, { method: 'DELETE' });
+  revalidateTag('customersSICC');
   revalidatePath('/dashboard/customersSICC', 'page');
   redirect('/dashboard/customersSICC');
 }
