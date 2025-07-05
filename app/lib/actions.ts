@@ -66,11 +66,19 @@ export async function createCustomerSICC(formData: FormData) {
     urlSlug: slugify(name),
   };
 
-  await fetch(`${DIRECTUS_URL}/items/Clientes`, {
+  const response = await fetch(`${DIRECTUS_URL}/items/Clientes`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   });
+  if (!response.ok) {
+  console.error('Failed to create customer in Directus', await response.text());
+  throw new Error('Failed to create customer in Directus');
+}
+if (response.ok) {
+  console.log('Create OK customer in Directus', await response.text());
+  throw new Error('Failed to create customer in Directus');
+}
   revalidateTag('customersSICC');
   revalidatePath('/dashboard/customersSICC', 'page');
   redirect('/dashboard/customersSICC');
