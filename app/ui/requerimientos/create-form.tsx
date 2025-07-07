@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button } from "@/app/ui/button";
+
 import Link from "next/link";
 import { createRequerimiento } from "@/app/lib/data";
 
@@ -32,7 +32,7 @@ export default function CreateRequerimientoForm({ siteId }: { siteId: string }) 
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="grid gap-2">
         <label className="text-sm font-medium">Nombre</label>
-        <Input value={nombre} onChange={(e) => setNombre(e.target.value)} />
+        <input value={nombre} onChange={(e) => setNombre(e.target.value)} />
       </div>
       <Button type="submit">Crear Requerimiento</Button>
     </form>
