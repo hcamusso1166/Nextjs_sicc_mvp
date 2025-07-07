@@ -18,8 +18,8 @@ export default async function Page({
         <strong>{customer?.name || ''}</strong> registrada con éxito.
       </div>
       <div className="flex gap-4">
-        <Link href="/dashboard/customersSICC/site" className="underline">Volver</Link>
-        <Link href="/dashboard/customersSICC/site/create" className="underline">Crear nuevo Site</Link>
+        <Link href="/dashboard/customersSICC" className="underline">Volver</Link>
+        <Link href="/dashboard/customersSICC/site" className="underline">Crear nuevo Site</Link>
         <Link href={`/dashboard/customersSICC/site/requerimientos?siteId=${id}`} className="underline">Crear Requerimiento</Link>
       </div>
     </main>
