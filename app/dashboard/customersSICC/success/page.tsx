@@ -1,8 +1,13 @@
 import Link from 'next/link';
 import { fetchCustomerSICCById } from '@/app/lib/data';
 
-export default async function Page({ searchParams }: { searchParams: { id?: string } }) {
-  const id = searchParams?.id || '';
+export default async function Page({
+  searchParams,
+}: {
+  searchParams?: Promise<{ id?: string }>;
+}) {
+  const params = await searchParams;
+  const id = params?.id || '';
   const customer = id ? await fetchCustomerSICCById(id) : null;
   return (
     <main className="p-4 md:p-6">

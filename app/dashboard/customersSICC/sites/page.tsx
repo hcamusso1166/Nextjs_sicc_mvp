@@ -1,10 +1,12 @@
 import Form from '@/app/ui/sites/create-form';
 
-export default async function Page(props: {
-  searchParams?: Promise<{ customerId?: string }>
+export default async function Page({
+  searchParams,
+}: {
+  searchParams?: Promise<{ customerId?: string }>;
 }) {
-  const searchParams = await props.searchParams;
-  const customerId = searchParams?.customerId || '';
+  const params = await searchParams;
+  const customerId = params?.customerId || '';
   return (
     <main>
       <Form customerId={customerId} />
