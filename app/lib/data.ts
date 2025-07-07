@@ -172,7 +172,20 @@ export async function fetchSiteById<T extends DirectusSite = DirectusSite>(id: s
     return null;
   }
 }
-
+export async function fetchRequerimientoById<T extends DirectusSite = DirectusSite>(id: string): Promise<T | null> {
+  try {
+    const res = await fetch(`${DIRECTUS_URL}/items/requerimiento/${id}`, {
+      cache: 'no-store',
+      next: { tags: ['sites'] },
+    });
+    if (!res.ok) throw new Error('Error al obtener site');
+    const data: { data: T } = await res.json();
+    return data.data;
+  } catch (err) {
+    console.error('Error al hacer fetch de site:', err);
+    return null;
+  }
+}
 export async function fetchCustomersSICCPages<T extends DirectusCustomer = DirectusCustomer>(query = "") {
   const url = `${DIRECTUS_URL}/items/Clientes?limit=1&meta=filter_count${query ? `&filter[name][_contains]=${encodeURIComponent(query)}` : ''}`;
   try {
