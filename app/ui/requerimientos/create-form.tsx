@@ -22,7 +22,7 @@ export default function CreateRequerimientoForm({ siteId }: { siteId: string }) 
         <p className="text-lg font-semibold">Requerimiento creado correctamente.</p>
         <div className="flex gap-4">
           <Link href="/dashboard/customersSICC/sites" className="underline">Volver</Link>
-          <Button onClick={() => setSuccess(false)}>Crear nuevo Requerimiento</Button>
+          <Button onClick={() => setSuccess(false)}>Crear Nuevo Requerimiento</Button>
         </div>
       </div>
     );
