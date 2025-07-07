@@ -23,6 +23,7 @@ export default async function Page({
         {customerId && (
           <Link href={`/dashboard/customersSICC/sites?customerId=${customerId}`} className="rounded bg-blue-600 px-4 py-2 text-white text-sm hover:bg-blue-500">Crear SITE</Link>
         )}
+        <Link href={`/dashboard/customersSICC/sites/requerimientos?siteId=${siteId}`} className="underline">Crear Requerimiento</Link>
       </div>
     </main>
   );
