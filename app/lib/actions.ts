@@ -139,13 +139,21 @@ const response = await fetch(`${DIRECTUS_URL}/items/sites`, {
   }
   return redirect('/dashboard/customersSICC');
 }
-export async function createRequerimiento(data: any) {
+export async function createRequerimiento(formData: FormData) {
+  const nombre = String(formData.get('nombre') || '');
+  const siteId = String(formData.get('idSites') || '');
+  const body = {
+    status: formData.get('status'),
+    idSites: siteId,
+    nombre,
+    urlSlug: slugify(nombre),
+  };
   const res = await fetch(`${DIRECTUS_URL}/items/requerimiento`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(body),
   });
   return res.json();
 }
