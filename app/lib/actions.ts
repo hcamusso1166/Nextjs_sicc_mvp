@@ -116,21 +116,27 @@ export async function deleteCustomerSICC(id: string) {
 }
 export async function createSite(formData: FormData) {
   const nombre = String(formData.get('nombre') || '');
+  const customerId = String(formData.get('idCliente') || '');
   const body = {
     status: formData.get('status'),
-    idCliente: formData.get('idCliente'),
+    idCliente: customerId,
     nombre,
     urlSlug: slugify(nombre),
   };
 
-  await fetch(`${DIRECTUS_URL}/items/sites`, {
+const response = await fetch(`${DIRECTUS_URL}/items/sites`, {
     next: { revalidate: 0 },
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   });
+  const data = await response.json().catch(() => ({}));
+  const id = data?.data?.id as string | undefined;
   revalidateTag('sites');
   revalidatePath('/dashboard/customersSICC/sites');
+    if (id) {
+    return redirect(`/dashboard/customersSICC/sites/success?id=${id}&customerId=${customerId}`);
+  }
   return redirect('/dashboard/customersSICC');
 }
 

@@ -33,6 +33,14 @@ export interface DirectusCustomer {
 
 export type CustomerSICC = DirectusCustomer;
 
+export interface DirectusSite {
+  id: string;
+  status: string;
+  idCliente: string;
+  nombre: string;
+  urlSlug: string;
+}
+
 export interface DirectusListResponse<T> {
   data: T[];
   meta?: {
