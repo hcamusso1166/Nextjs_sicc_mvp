@@ -85,13 +85,16 @@ export default function Form({ customer }: { customer: DirectusCustomer }) {
           <label htmlFor="status" className="mb-2 block text-sm font-medium">
             Estado
           </label>
-          <input
+          <select
             id="status"
             name="status"
-            type="text"
-            defaultValue={customer.status}
             className="block w-full rounded-md border border-gray-200 p-2 text-sm"
-          />
+            defaultValue={customer.status}
+          >
+            <option value="Publicado">Publicado</option>
+            <option value="Borrador">Borrador</option>
+            <option value="Archivado">Archivado</option>
+          </select>
         </div>
       </div>
       <div className="mt-6 flex justify-end gap-4">

@@ -66,18 +66,76 @@ export async function createCustomerSICC(formData: FormData) {
     urlSlug: slugify(name),
   };
 
- await fetch(`${DIRECTUS_URL}/items/Clientes`, {
+ const response = await fetch(`${DIRECTUS_URL}/items/Clientes`, { next: { revalidate: 0 }  ,
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   });
   
+const data = await response.json().catch(() => ({}));
+  console.log('Create OK customer in Directus', data?.data?.id);
+
+  await revalidateTag('customersSICC');
+  await revalidatePath('/dashboard/customersSICC');
+  return redirect('/dashboard/customersSICC');
+}
+
+export async function updateCustomerSICC(id: string, formData: FormData) {
+  const name = String(formData.get('name') || '');
+  const body = {
+    status: formData.get('status'),
+    name,
+    CUIT: formData.get('CUIT'),
+    contacto: formData.get('contacto'),
+    mail: formData.get('mail'),
+    tel: formData.get('tel'),
+    mailNotif: formData.get('mailNotif'),
+    urlSlug: slugify(name),
+  };
+
+  await fetch(`${DIRECTUS_URL}/items/Clientes/${id}`, { next: { revalidate: 0 }  ,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
   revalidateTag('customersSICC');
   revalidatePath('/dashboard/customersSICC');
   return redirect('/dashboard/customersSICC');
 }
 
-export async function updateCustomerSICC(id: string, formData: FormData) {
+export async function deleteCustomerSICC(id: string) {
+  await fetch(`${DIRECTUS_URL}/items/Clientes/${id}`, { next: { revalidate: 0 }  , method: 'DELETE' });
+  revalidateTag('customersSICC');
+  revalidatePath('/dashboard/customersSICC' );
+  return redirect('/dashboard/customersSICC');
+}
+
+// Generic actions for customers
+export async function createCustomer(formData: FormData) {
+  const name = String(formData.get('name') || '');
+  const body = {
+    status: formData.get('status'),
+    name,
+    CUIT: formData.get('CUIT'),
+    contacto: formData.get('contacto'),
+    mail: formData.get('mail'),
+    tel: formData.get('tel'),
+    mailNotif: formData.get('mailNotif'),
+    urlSlug: slugify(name),
+  };
+
+  await fetch(`${DIRECTUS_URL}/items/Clientes`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+
+  revalidateTag('customers');
+  revalidatePath('/dashboard/customers');
+  return redirect('/dashboard/customers');
+}
+
+export async function updateCustomer(id: string, formData: FormData) {
   const name = String(formData.get('name') || '');
   const body = {
     status: formData.get('status'),
@@ -95,14 +153,14 @@ export async function updateCustomerSICC(id: string, formData: FormData) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   });
-  revalidateTag('customersSICC');
-  revalidatePath('/dashboard/customersSICC');
-  return redirect('/dashboard/customersSICC');
+  revalidateTag('customers');
+  revalidatePath('/dashboard/customers');
+  return redirect('/dashboard/customers');
 }
 
-export async function deleteCustomerSICC(id: string) {
+export async function deleteCustomer(id: string) {
   await fetch(`${DIRECTUS_URL}/items/Clientes/${id}`, { method: 'DELETE' });
-  revalidateTag('customersSICC');
-  revalidatePath('/dashboard/customersSICC' );
-  return redirect('/dashboard/customersSICC');
+  revalidateTag('customers');
+  revalidatePath('/dashboard/customers');
+  return redirect('/dashboard/customers');
 }

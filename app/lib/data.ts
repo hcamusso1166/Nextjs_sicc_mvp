@@ -174,6 +174,48 @@ export async function fetchCustomersSICCPages<T extends DirectusCustomer = Direc
     return 0;
   }
 }
+// Generic helpers for customers using Directus REST API
+export async function getCustomers<T extends DirectusCustomer = DirectusCustomer>(
+  query = '',
+  currentPage = 1,
+): Promise<T[]> {
+  const url = `${DIRECTUS_URL}/items/Clientes?page=${currentPage}&limit=${ITEMS_PER_PAGE}&sort=name${query ? `&filter[name][_contains]=${encodeURIComponent(query)}` : ''}`;
+  try {
+    const res = await fetch(url, { cache: 'no-store', next: { tags: ['customers'] } });
+    if (!res.ok) throw new Error('Error al obtener clientes');
+    const data: DirectusListResponse<T> = await res.json();
+    return data.data;
+  } catch (err) {
+    console.error('Error al hacer fetch de clientes:', err);
+    return [];
+  }
+}
+
+export async function fetchCustomerById<T extends DirectusCustomer = DirectusCustomer>(id: string): Promise<T | null> {
+  try {
+    const res = await fetch(`${DIRECTUS_URL}/items/Clientes/${id}`, { cache: 'no-store', next: { tags: ['customers'] } });
+    if (!res.ok) throw new Error('Error al obtener cliente');
+    const data: { data: T } = await res.json();
+    return data.data;
+  } catch (err) {
+    console.error('Error al hacer fetch de cliente:', err);
+    return null;
+  }
+}
+
+export async function fetchCustomersPages<T extends DirectusCustomer = DirectusCustomer>(query = '') {
+  const url = `${DIRECTUS_URL}/items/Clientes?limit=1&meta=filter_count${query ? `&filter[name][_contains]=${encodeURIComponent(query)}` : ''}`;
+  try {
+    const res = await fetch(url, { cache: 'no-store', next: { tags: ['customers'] } });
+    if (!res.ok) throw new Error('Error al obtener total de clientes');
+    const data: DirectusListResponse<T> = await res.json();
+    const count = data?.meta?.filter_count ?? 0;
+    return Math.ceil(count / ITEMS_PER_PAGE);
+  } catch (err) {
+    console.error('Error al hacer fetch de paginas de clientes:', err);
+    return 0;
+  }
+}
 
 
 export async function fetchInvoicesPages(query: string) {

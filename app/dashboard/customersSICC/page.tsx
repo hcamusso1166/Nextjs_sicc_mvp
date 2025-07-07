@@ -1,4 +1,5 @@
 export const dynamic = 'force-dynamic';
+import ClientRefresher from './ClientRefresher';
 import Pagination from '@/app/ui/customersSICC/pagination';
 import CustomersSICCTable from '@/app/ui/customersSICC/table';
 import { CreateCustomerSICC } from '@/app/ui/customersSICC/buttons';
@@ -19,6 +20,7 @@ export default async function Page(props: {
   const totalPages = await fetchCustomersSICCPages(query);
   return (
     <div className="w-full">
+      <ClientRefresher />
       <div className="flex w-full items-center justify-between">
         <h1 className={`${lusitana.className} text-2xl`}>Clientes</h1>
       </div>
