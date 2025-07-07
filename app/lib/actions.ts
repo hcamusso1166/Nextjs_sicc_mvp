@@ -66,17 +66,22 @@ export async function createCustomerSICC(formData: FormData) {
     urlSlug: slugify(name),
   };
 
- const response = await fetch(`${DIRECTUS_URL}/items/Clientes`, { next: { revalidate: 0 }  ,
+  const response = await fetch(`${DIRECTUS_URL}/items/Clientes`, {
+    next: { revalidate: 0 },
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   });
   
-const data = await response.json().catch(() => ({}));
-  console.log('Create OK customer in Directus', data?.data?.id);
+  const data = await response.json().catch(() => ({}));
+  const id = data?.data?.id as string | undefined;
+  console.log('Create OK customer in Directus', id);
 
   await revalidateTag('customersSICC');
   await revalidatePath('/dashboard/customersSICC');
+    if (id) {
+    return redirect(`/dashboard/customersSICC/success?id=${id}`);
+  }
   return redirect('/dashboard/customersSICC');
 }
 
@@ -107,6 +112,25 @@ export async function deleteCustomerSICC(id: string) {
   await fetch(`${DIRECTUS_URL}/items/Clientes/${id}`, { next: { revalidate: 0 }  , method: 'DELETE' });
   revalidateTag('customersSICC');
   revalidatePath('/dashboard/customersSICC' );
+  return redirect('/dashboard/customersSICC');
+}
+export async function createSite(formData: FormData) {
+  const nombre = String(formData.get('nombre') || '');
+  const body = {
+    status: formData.get('status'),
+    idCliente: formData.get('idCliente'),
+    nombre,
+    urlSlug: slugify(nombre),
+  };
+
+  await fetch(`${DIRECTUS_URL}/items/sites`, {
+    next: { revalidate: 0 },
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  revalidateTag('sites');
+  revalidatePath('/dashboard/customersSICC/sites');
   return redirect('/dashboard/customersSICC');
 }
 

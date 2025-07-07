@@ -5,8 +5,8 @@ import { createCustomerSICC } from '@/app/lib/actions';
 export default function Form() {
   return (
     <form action={createCustomerSICC}>
-      <div className="rounded-md bg-gray-50 p-4 md:p-6">
-        <div className="mb-4">
+      <div className="rounded-md bg-gray-50 p-4 md:p-6 grid grid-cols-1 gap-4 md:grid-cols-2 text-xs">
+        <div>
           <label htmlFor="name" className="mb-2 block text-sm font-medium">
             Nombre
           </label>
@@ -14,10 +14,10 @@ export default function Form() {
             id="name"
             name="name"
             type="text"
-            className="block w-full rounded-md border border-gray-200 p-2 text-sm"
+            className="block w-full rounded-md border border-gray-200 p-2"
           />
         </div>
-        <div className="mb-4">
+        <div>
           <label htmlFor="CUIT" className="mb-2 block text-sm font-medium">
             CUIT
           </label>
@@ -25,10 +25,10 @@ export default function Form() {
             id="CUIT"
             name="CUIT"
             type="text"
-            className="block w-full rounded-md border border-gray-200 p-2 text-sm"
+            className="block w-full rounded-md border border-gray-200 p-2"
           />
         </div>
-        <div className="mb-4">
+        <div>
           <label htmlFor="contacto" className="mb-2 block text-sm font-medium">
             Contacto
           </label>
@@ -36,10 +36,10 @@ export default function Form() {
             id="contacto"
             name="contacto"
             type="text"
-            className="block w-full rounded-md border border-gray-200 p-2 text-sm"
+            className="block w-full rounded-md border border-gray-200 p-2"
           />
         </div>
-        <div className="mb-4">
+        <div>
           <label htmlFor="mail" className="mb-2 block text-sm font-medium">
             Mail
           </label>
@@ -47,10 +47,10 @@ export default function Form() {
             id="mail"
             name="mail"
             type="email"
-            className="block w-full rounded-md border border-gray-200 p-2 text-sm"
+            className="block w-full rounded-md border border-gray-200 p-2"
           />
         </div>
-        <div className="mb-4">
+        <div>
           <label htmlFor="tel" className="mb-2 block text-sm font-medium">
             Tel
           </label>
@@ -58,10 +58,10 @@ export default function Form() {
             id="tel"
             name="tel"
             type="text"
-            className="block w-full rounded-md border border-gray-200 p-2 text-sm"
+            className="block w-full rounded-md border border-gray-200"
           />
         </div>
-        <div className="mb-4">
+        <div>
           <label htmlFor="mailNotif" className="mb-2 block text-sm font-medium">
             Mail Notif
           </label>
@@ -69,17 +69,17 @@ export default function Form() {
             id="mailNotif"
             name="mailNotif"
             type="email"
-            className="block w-full rounded-md border border-gray-200 p-2 text-sm"
+            className="block w-full rounded-md border border-gray-200 p-2"
           />
         </div>
-        <div className="mb-4">
+        <div>
           <label htmlFor="status" className="mb-2 block text-sm font-medium">
             Estado
           </label>
           <select
             id="status"
             name="status"
-            className="block w-full rounded-md border border-gray-200 p-2 text-sm"
+            className="block w-full rounded-md border border-gray-200 p-2"
             defaultValue="Publicado"
           >
             <option value="Publicado">Publicado</option>

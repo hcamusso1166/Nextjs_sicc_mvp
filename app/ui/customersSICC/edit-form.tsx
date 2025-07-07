@@ -8,8 +8,8 @@ export default function Form({ customer }: { customer: DirectusCustomer }) {
   const updateCustomer = updateCustomerSICC.bind(null, customer.id);
   return (
     <form action={updateCustomer}>
-      <div className="rounded-md bg-gray-50 p-4 md:p-6">
-        <div className="mb-4">
+      <div className="rounded-md bg-gray-50 p-4 md:p-6 grid grid-cols-1 gap-4 md:grid-cols-2 text-xs">
+        <div>
           <label htmlFor="name" className="mb-2 block text-sm font-medium">
             Nombre
           </label>
@@ -18,10 +18,10 @@ export default function Form({ customer }: { customer: DirectusCustomer }) {
             name="name"
             type="text"
             defaultValue={customer.name}
-            className="block w-full rounded-md border border-gray-200 p-2 text-sm"
+            className="block w-full rounded-md border border-gray-200 p-2"
           />
         </div>
-        <div className="mb-4">
+        <div>
           <label htmlFor="CUIT" className="mb-2 block text-sm font-medium">
             CUIT
           </label>
@@ -30,10 +30,10 @@ export default function Form({ customer }: { customer: DirectusCustomer }) {
             name="CUIT"
             type="text"
             defaultValue={customer.CUIT}
-            className="block w-full rounded-md border border-gray-200 p-2 text-sm"
+            className="block w-full rounded-md border border-gray-200 p-2"
           />
         </div>
-        <div className="mb-4">
+        <div>
           <label htmlFor="contacto" className="mb-2 block text-sm font-medium">
             Contacto
           </label>
@@ -42,10 +42,10 @@ export default function Form({ customer }: { customer: DirectusCustomer }) {
             name="contacto"
             type="text"
             defaultValue={customer.contacto}
-            className="block w-full rounded-md border border-gray-200 p-2 text-sm"
+            className="block w-full rounded-md border border-gray-200 p-2"
           />
         </div>
-        <div className="mb-4">
+        <div>
           <label htmlFor="mail" className="mb-2 block text-sm font-medium">
             Mail
           </label>
@@ -54,10 +54,10 @@ export default function Form({ customer }: { customer: DirectusCustomer }) {
             name="mail"
             type="email"
             defaultValue={customer.mail}
-            className="block w-full rounded-md border border-gray-200 p-2 text-sm"
+            className="block w-full rounded-md border border-gray-200 p-2"
           />
         </div>
-        <div className="mb-4">
+        <div>
           <label htmlFor="tel" className="mb-2 block text-sm font-medium">
             Tel
           </label>
@@ -66,10 +66,10 @@ export default function Form({ customer }: { customer: DirectusCustomer }) {
             name="tel"
             type="text"
             defaultValue={customer.tel}
-            className="block w-full rounded-md border border-gray-200 p-2 text-sm"
+            className="block w-full rounded-md border border-gray-200 p-2"
           />
         </div>
-        <div className="mb-4">
+        <div>
           <label htmlFor="mailNotif" className="mb-2 block text-sm font-medium">
             Mail Notif
           </label>
@@ -78,17 +78,17 @@ export default function Form({ customer }: { customer: DirectusCustomer }) {
             name="mailNotif"
             type="email"
             defaultValue={customer.mailNotif}
-            className="block w-full rounded-md border border-gray-200 p-2 text-sm"
+            className="block w-full rounded-md border border-gray-200 p-2"
           />
         </div>
-        <div className="mb-4">
+        <div>
           <label htmlFor="status" className="mb-2 block text-sm font-medium">
             Estado
           </label>
           <select
             id="status"
             name="status"
-            className="block w-full rounded-md border border-gray-200 p-2 text-sm"
+            className="block w-full rounded-md border border-gray-200 p-2"
             defaultValue={customer.status}
           >
             <option value="Publicado">Publicado</option>
@@ -96,6 +96,14 @@ export default function Form({ customer }: { customer: DirectusCustomer }) {
             <option value="Archivado">Archivado</option>
           </select>
         </div>
+      </div>
+      <div className="mt-6 flex justify-end">
+        <Link
+          href={`/dashboard/customersSICC/sites?customerId=${customer.id}`}
+          className="rounded bg-blue-600 px-4 py-2 text-white text-sm hover:bg-blue-500"
+        >
+          Crear SITE
+        </Link>
       </div>
       <div className="mt-6 flex justify-end gap-4">
         <Link
