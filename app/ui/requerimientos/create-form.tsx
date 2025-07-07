@@ -6,7 +6,7 @@ export default function CreateRequerimientoForm({ siteId }: { siteId: string }) 
 
   return (
     <form action={createRequerimiento}>
-      <input type="hidden" name="idCliente" value={siteId} />
+      <input type="hidden" name="idSite" value={siteId} />
       <div className="rounded-md bg-gray-50 p-4 md:p-6 grid grid-cols-1 gap-4 md:grid-cols-2 text-xs">
         <div>
           <label htmlFor="nombre" className="mb-1 block font-medium">Nombre</label>

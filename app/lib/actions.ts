@@ -148,14 +148,21 @@ export async function createRequerimiento(formData: FormData) {
     nombre,
     urlSlug: slugify(nombre),
   };
-  const res = await fetch(`${DIRECTUS_URL}/items/requerimiento`, {
+  const response = await fetch(`${DIRECTUS_URL}/items/requerimiento`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(body),
   });
-  return res.json();
+  const data = await response.json().catch(() => ({}));
+  const id = data?.data?.id as string | undefined;
+  revalidateTag('requerimientos');
+  revalidatePath('/dashboard/customersSICC/sites/requerimientos');
+    if (id) {
+    return redirect(`/dashboard/customersSICC/sites/requerimientos/success?id=${id}&siteId=${siteId}&customerId=${customerId}`);
+  }
+  return redirect('/dashboard/customersSICC');
 }
 
 // Generic actions for customers
