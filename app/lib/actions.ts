@@ -149,14 +149,14 @@ export async function createRequerimiento(formData: FormData) {
     urlSlug: slugify(nombre),
   };
   const response = await fetch(`${DIRECTUS_URL}/items/requerimiento`, {
+    next: { revalidate: 0 },
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
+      headers: {'Content-Type": "application/json'} ,    
+      body: JSON.stringify(body),
   });
   const data = await response.json().catch(() => ({}));
   const id = data?.data?.id as string | undefined;
+  console.log('Create OK requerimiento in Directus', id);
   revalidateTag('requerimientos');
   revalidatePath('/dashboard/customersSICC/sites/requerimientos');
     if (id) {
