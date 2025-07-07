@@ -172,16 +172,7 @@ export async function fetchSiteById<T extends DirectusSite = DirectusSite>(id: s
     return null;
   }
 }
-export async function createRequerimiento(data: any) {
-  const res = await fetch(`${DIRECTUS_URL}/items/requerimiento`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
-  return res.json();
-}
+
 export async function fetchCustomersSICCPages<T extends DirectusCustomer = DirectusCustomer>(query = "") {
   const url = `${DIRECTUS_URL}/items/Clientes?limit=1&meta=filter_count${query ? `&filter[name][_contains]=${encodeURIComponent(query)}` : ''}`;
   try {

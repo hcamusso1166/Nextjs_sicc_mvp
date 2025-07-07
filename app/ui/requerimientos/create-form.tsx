@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Button } from "@/app/ui/button";
 
 import Link from "next/link";
-import { createRequerimiento } from "@/app/lib/data";
+import { createRequerimiento } from "@/app/lib/actions";
 
 export default function CreateRequerimientoForm({ siteId }: { siteId: string }) {
   const [nombre, setNombre] = useState("");

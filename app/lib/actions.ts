@@ -139,6 +139,16 @@ const response = await fetch(`${DIRECTUS_URL}/items/sites`, {
   }
   return redirect('/dashboard/customersSICC');
 }
+export async function createRequerimiento(data: any) {
+  const res = await fetch(`${DIRECTUS_URL}/items/requerimiento`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  return res.json();
+}
 
 // Generic actions for customers
 export async function createCustomer(formData: FormData) {
