@@ -151,7 +151,7 @@ export async function createRequerimiento(formData: FormData) {
   const response = await fetch(`${DIRECTUS_URL}/items/requerimiento`, {
     next: { revalidate: 0 },
     method: "POST",
-      headers: {'Content-Type": "application/json'} ,    
+      headers: { 'Content-Type': 'application/json' } ,    
       body: JSON.stringify(body),
   });
   const data = await response.json().catch(() => ({}));
@@ -160,7 +160,7 @@ export async function createRequerimiento(formData: FormData) {
   revalidateTag('requerimientos');
   revalidatePath('/dashboard/customersSICC/sites/requerimientos');
     if (id) {
-    return redirect(`/dashboard/customersSICC/sites/requerimientos/success?id=${id}&siteId=${siteId}&customerId=${customerId}`);
+    return redirect(`/dashboard/customersSICC/sites/requerimientos/success?id=${id}&siteId=${siteId}`);
   }
   return redirect('/dashboard/customersSICC');
 }
