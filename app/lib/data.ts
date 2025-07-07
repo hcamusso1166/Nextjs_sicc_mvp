@@ -328,3 +328,14 @@ export async function fetchFilteredCustomers(query: string) {
     throw new Error('Failed to fetch customer table.');
   }
 }
+
+export async function createRequerimiento(data: any) {
+  const res = await fetch("https://vps-4233212-x.dattaweb.com/items/requerimiento", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  return res.json();
+}
