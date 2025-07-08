@@ -4,12 +4,11 @@ import { fetchRequerimientoById,fetchSiteById, fetchCustomerSICCById } from '@/a
 export default async function Page({
   searchParams,
 }: {
-  searchParams?: Promise<{ id?: string; siteId?: string; customerId?: string }>;
+  searchParams?: { id?: string; siteId?: string; customerId?: string };
 }) {
-  const params = await searchParams;
-  const id = params?.id || '';
-  const siteId = params?.siteId || '';
-  const customerId = params?.customerId || '';
+  const id = searchParams?.id || '';
+  const siteId = searchParams?.siteId || '';
+  const customerId = searchParams?.customerId || '';
   const requerimiento = id ? await fetchRequerimientoById(id) : null;
   const site = siteId ? await fetchSiteById(siteId) : null;
   const customer = customerId ? await fetchCustomerSICCById(customerId) : null;
@@ -22,7 +21,7 @@ export default async function Page({
       <div className="flex gap-4">
         <Link href="/dashboard/customersSICC" className="underline">Volver</Link>
 
-        <Link href={`/dashboard/customersSICC/site/requerimientos?siteId=${siteId}`} className="underline">Crear Requerimiento</Link>
+        <Link href={`/dashboard/customersSICC/sites/requerimientos?siteId=${siteId}`} className="underline">Crear Requerimiento</Link>  
       </div>
     </main>
   );
