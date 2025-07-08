@@ -1,7 +1,7 @@
 import CreateRequerimientoForm from '@/app/ui/requerimientos/create-form';
 
 export default async function Page({
-     searchParams 
+     searchParams,
     }: { 
         searchParams?: Promise<{ siteId?: string } > ;
     }) {
