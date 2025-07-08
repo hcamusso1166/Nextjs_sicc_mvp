@@ -15,18 +15,21 @@ import {
 interface SiteTree {
   id: string;
   nombre?: string;
+  fechaInicio?: string;
   requerimientos: RequerimientoTree[];
 }
 
 interface RequerimientoTree {
   id: string;
   nombre?: string;
+  fechaInicio?: string;
   proveedores: ProveedorTree[];
 }
 
 interface ProveedorTree {
   id: string;
   nombre?: string;
+  CUIT?: string;
   personas: any[];
   vehiculos: any[];
 }
@@ -76,10 +79,21 @@ export default async function Page({
             provsRaw.map(async (prov) => {
               const personas = await fetchPersonasByProveedor(prov.id);
               const vehiculos = await fetchVehiculosByProveedor(prov.id);
-              return { id: prov.id, nombre: prov.nombre, personas, vehiculos };
+              return {
+                id: prov.id,
+                nombre: prov.nombre,
+                CUIT: prov.CUIT,
+                personas,
+                vehiculos,
+              };
             })
           );
-          return { id: req.id, nombre: req.nombre, proveedores };
+          return {
+            id: req.id,
+            nombre: req.nombre,
+            fechaInicio: req.fechaInicio,
+            proveedores,
+        };
         })
       );
       return { id: site.id, nombre: site.nombre, requerimientos };
@@ -88,22 +102,29 @@ export default async function Page({
 
   return (
     <div className="p-4 text-[11px] space-y-4">
-      <h1 className={`${lusitana.className} text-lg`}>{customer.name}</h1>
+      <h1 className={`${lusitana.className} text-lg`}>Cliente: {customer.name}</h1>
+      <p>CUIT: {customer.CUIT} - Estado: {customer.status}</p>
       {sites.map((site) => (
         <div key={site.id} className="border rounded p-2">
           <h2 className="font-semibold">Site: {site.nombre}</h2>
           {site.requerimientos.map((req) => (
             <div key={req.id} className="ml-4 mt-2">
               <h3 className="font-medium">Requerimiento: {req.nombre}</h3>
+                {req.fechaInicio && (
+                <p className="ml-2">Fecha de Inicio: {req.fechaInicio}</p>
+              )}
               {req.proveedores.map((prov) => (
                 <div key={prov.id} className="ml-4 mt-1">
                   <h4 className="font-medium">Proveedor: {prov.nombre}</h4>
+                  {prov.CUIT && <p className="ml-2">CUIT: {prov.CUIT}</p>}
                   {prov.personas.length > 0 && (
                     <div className="ml-4">
                       <h5 className="underline">Personas</h5>
                       <ul className="list-disc ml-5">
                         {prov.personas.map((p: any) => (
-                          <li key={p.id}>{p.nombre} {p.apellido}</li>
+                          <li key={p.id}>
+                            {p.nombre} {p.apellido} - DNI {p.DNI} ({p.status})
+                          </li>
                         ))}
                       </ul>
                     </div>
@@ -113,7 +134,9 @@ export default async function Page({
                       <h5 className="underline">Vehículos</h5>
                       <ul className="list-disc ml-5">
                         {prov.vehiculos.map((v: any) => (
-                          <li key={v.id}>{v.dominio} {v.marca} {v.modelo}</li>
+                          <li key={v.id}>
+                            {v.dominio} {v.marca} {v.modelo} {v.color} ({v.status})
+                          </li>
                         ))}
                       </ul>
                     </div>

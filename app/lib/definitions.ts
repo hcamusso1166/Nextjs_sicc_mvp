@@ -40,11 +40,22 @@ export interface DirectusSite {
   nombre: string;
   urlSlug: string;
 }
+export interface DirectusRequerimiento {
+  id: string;
+  status: string;
+  idSites: string;
+  nombre: string;
+  fechaInicio?: string;
+  fechaProyectadaFin?: string | null;
+  fechaRealFin?: string | null;
+}
+
 export interface DirectusProveedor {
   id: string;
   status: string;
-  idRequerimiento: string | null;
+  idRequerimientos: string | null;
   nombre: string;
+  CUIT?: string;
   urlSlug?: string;
 }
 

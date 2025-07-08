@@ -9,6 +9,8 @@ import {
   DirectusCustomer,
   DirectusListResponse,
   DirectusSite,
+  DirectusRequerimiento,
+  DirectusProveedor,
 } from './definitions';
 import { formatCurrency } from './utils';
 
@@ -200,7 +202,7 @@ export async function fetchSitesByCustomer<T extends DirectusSite = DirectusSite
   }
 }
 
-export async function fetchRequerimientosBySite<T = any>(siteId: string): Promise<T[]> {
+export async function fetchRequerimientosBySite<T extends DirectusRequerimiento = DirectusRequerimiento>(siteId: string): Promise<T[]> {
   const url = `${DIRECTUS_URL}/items/requerimiento?filter%5BidSites%5D%5B_eq%5D=${siteId}`;
   try {
     const res = await fetch(url, { cache: 'no-store', next: { tags: ['requerimientos'] } });
@@ -213,8 +215,8 @@ export async function fetchRequerimientosBySite<T = any>(siteId: string): Promis
   }
 }
 
-export async function fetchProveedoresByRequerimiento<T = any>(reqId: string): Promise<T[]> {
-  const url = `${DIRECTUS_URL}/items/proveedor?filter%5BidRequerimiento%5D%5B_eq%5D=${reqId}`;
+export async function fetchProveedoresByRequerimiento<T extends DirectusProveedor = DirectusProveedor>(reqId: string): Promise<T[]> {
+  const url = `${DIRECTUS_URL}/items/proveedor?filter%5BidRequerimientos%5D%5B_eq%5D=${reqId}`;
   try {
     const res = await fetch(url, { cache: 'no-store', next: { tags: ['proveedores'] } });
     if (!res.ok) throw new Error('Error al obtener proveedores');
