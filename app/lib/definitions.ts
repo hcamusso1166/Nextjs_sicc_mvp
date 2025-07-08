@@ -40,7 +40,33 @@ export interface DirectusSite {
   nombre: string;
   urlSlug: string;
 }
+export interface DirectusProveedor {
+  id: string;
+  status: string;
+  idRequerimiento: string | null;
+  nombre: string;
+  urlSlug?: string;
+}
 
+export interface DirectusPersona {
+  id: string;
+  status: string;
+  idProveedor: string | null;
+  nombre: string;
+  apellido?: string;
+  DNI?: number;
+}
+
+export interface DirectusVehiculo {
+  id: string;
+  status: string;
+  idProveedor: string | null;
+  dominio: string;
+  marca?: string;
+  modelo?: string;
+  color?: string;
+  observaciones?: string | null;
+}
 export interface DirectusListResponse<T> {
   data: T[];
   meta?: {

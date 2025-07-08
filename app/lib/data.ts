@@ -186,6 +186,72 @@ export async function fetchRequerimientoById<T extends DirectusSite = DirectusSi
     return null;
   }
 }
+
+export async function fetchSitesByCustomer<T extends DirectusSite = DirectusSite>(customerId: string): Promise<T[]> {
+  const url = `${DIRECTUS_URL}/items/sites?filter%5BidCliente%5D%5B_eq%5D=${customerId}`;
+  try {
+    const res = await fetch(url, { cache: 'no-store', next: { tags: ['sites'] } });
+    if (!res.ok) throw new Error('Error al obtener sites');
+    const data: DirectusListResponse<T> = await res.json();
+    return data.data;
+  } catch (err) {
+    console.error('Error al hacer fetch de sites:', err);
+    return [];
+  }
+}
+
+export async function fetchRequerimientosBySite<T = any>(siteId: string): Promise<T[]> {
+  const url = `${DIRECTUS_URL}/items/requerimiento?filter%5BidSites%5D%5B_eq%5D=${siteId}`;
+  try {
+    const res = await fetch(url, { cache: 'no-store', next: { tags: ['requerimientos'] } });
+    if (!res.ok) throw new Error('Error al obtener requerimientos');
+    const data: DirectusListResponse<T> = await res.json();
+    return data.data;
+  } catch (err) {
+    console.error('Error al hacer fetch de requerimientos:', err);
+    return [];
+  }
+}
+
+export async function fetchProveedoresByRequerimiento<T = any>(reqId: string): Promise<T[]> {
+  const url = `${DIRECTUS_URL}/items/proveedor?filter%5BidRequerimiento%5D%5B_eq%5D=${reqId}`;
+  try {
+    const res = await fetch(url, { cache: 'no-store', next: { tags: ['proveedores'] } });
+    if (!res.ok) throw new Error('Error al obtener proveedores');
+    const data: DirectusListResponse<T> = await res.json();
+    return data.data;
+  } catch (err) {
+    console.error('Error al hacer fetch de proveedores:', err);
+    return [];
+  }
+}
+
+export async function fetchPersonasByProveedor<T = any>(provId: string): Promise<T[]> {
+  const url = `${DIRECTUS_URL}/items/persona?filter%5BidProveedor%5D%5B_eq%5D=${provId}`;
+  try {
+    const res = await fetch(url, { cache: 'no-store', next: { tags: ['personas'] } });
+    if (!res.ok) throw new Error('Error al obtener personas');
+    const data: DirectusListResponse<T> = await res.json();
+    return data.data;
+  } catch (err) {
+    console.error('Error al hacer fetch de personas:', err);
+    return [];
+  }
+}
+
+export async function fetchVehiculosByProveedor<T = any>(provId: string): Promise<T[]> {
+  const url = `${DIRECTUS_URL}/items/vehiculo?filter%5BidProveedor%5D%5B_eq%5D=${provId}`;
+  try {
+    const res = await fetch(url, { cache: 'no-store', next: { tags: ['vehiculos'] } });
+    if (!res.ok) throw new Error('Error al obtener vehiculos');
+    const data: DirectusListResponse<T> = await res.json();
+    return data.data;
+  } catch (err) {
+    console.error('Error al hacer fetch de vehiculos:', err);
+    return [];
+  }
+}
+
 export async function fetchCustomersSICCPages<T extends DirectusCustomer = DirectusCustomer>(query = "") {
   const url = `${DIRECTUS_URL}/items/Clientes?limit=1&meta=filter_count${query ? `&filter[name][_contains]=${encodeURIComponent(query)}` : ''}`;
   try {
