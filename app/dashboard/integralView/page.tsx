@@ -101,7 +101,7 @@ export default async function Page({
   );
 
   return (
-    <div className="p-4 text-[11px] space-y-4">
+    <div className="p-4 text-[10px] space-y-4">
       <h1 className={`${lusitana.className} text-lg`}>Cliente: {customer.name}</h1>
       <p>CUIT: {customer.CUIT} - Estado: {customer.status}</p>
       {sites.map((site) => (
@@ -113,36 +113,105 @@ export default async function Page({
                 {req.fechaInicio && (
                 <p className="ml-2">Fecha de Inicio: {req.fechaInicio}</p>
               )}
-              {req.proveedores.map((prov) => (
-                <div key={prov.id} className="ml-4 mt-1">
-                  <h4 className="font-medium">Proveedor: {prov.nombre}</h4>
-                  {prov.CUIT && <p className="ml-2">CUIT: {prov.CUIT}</p>}
-                  {prov.personas.length > 0 && (
-                    <div className="ml-4">
-                      <h5 className="underline">Personas</h5>
-                      <ul className="list-disc ml-5">
-                        {prov.personas.map((p: any) => (
-                          <li key={p.id}>
-                            {p.nombre} {p.apellido} - DNI {p.DNI} ({p.status})
-                          </li>
-                        ))}
-                      </ul>
+              {req.proveedores.length > 0 && (
+                <div className="ml-4 mt-1">
+                  <h4 className="font-medium">Proveedores</h4>
+                  <div className="overflow-x-auto">
+                    <div className="inline-block min-w-full align-middle">
+                      <div className="overflow-hidden rounded-md bg-gray-50 p-2">
+                        <table className="min-w-full text-gray-900 text-[10px]">
+                          <thead className="bg-gray-50 text-left font-normal">
+                            <tr>
+                              <th className="px-3 py-2 font-medium">Nombre</th>
+                              <th className="px-3 py-2 font-medium">CUIT</th>
+                              <th className="px-3 py-2 font-medium">Estado</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-gray-200 bg-white">
+                            {req.proveedores.map((prov) => (
+                              <tr key={prov.id}>
+                                <td className="whitespace-nowrap px-3 py-2">{prov.nombre}</td>
+                                <td className="whitespace-nowrap px-3 py-2">{prov.CUIT}</td>
+                                <td className="whitespace-nowrap px-3 py-2">{prov.status}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+
                     </div>
-                  )}
-                  {prov.vehiculos.length > 0 && (
-                    <div className="ml-4 mt-1">
-                      <h5 className="underline">Vehículos</h5>
-                      <ul className="list-disc ml-5">
-                        {prov.vehiculos.map((v: any) => (
-                          <li key={v.id}>
-                            {v.dominio} {v.marca} {v.modelo} {v.color} ({v.status})
-                          </li>
-                        ))}
-                      </ul>
+</div>
+                  {req.proveedores.map((prov) => (
+                    <div key={prov.id} className="ml-4 mt-2 space-y-1">
+                      {prov.personas.length > 0 && (
+                        <div>
+                          <h5 className="underline">Personas</h5>
+                          <div className="overflow-x-auto">
+                            <div className="inline-block min-w-full align-middle">
+                              <div className="overflow-hidden rounded-md bg-gray-50 p-2">
+                                <table className="min-w-full text-gray-900 text-[10px]">
+                                  <thead className="bg-gray-50 text-left font-normal">
+                                    <tr>
+                                      <th className="px-3 py-2 font-medium">Nombre</th>
+                                      <th className="px-3 py-2 font-medium">Apellido</th>
+                                      <th className="px-3 py-2 font-medium">DNI</th>
+                                      <th className="px-3 py-2 font-medium">Estado</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody className="divide-y divide-gray-200 bg-white">
+                                    {prov.personas.map((p: any) => (
+                                      <tr key={p.id}>
+                                        <td className="whitespace-nowrap px-3 py-2">{p.nombre}</td>
+                                        <td className="whitespace-nowrap px-3 py-2">{p.apellido}</td>
+                                        <td className="whitespace-nowrap px-3 py-2">{p.DNI}</td>
+                                        <td className="whitespace-nowrap px-3 py-2">{p.status}</td>
+                                      </tr>
+                                    ))}
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                      {prov.vehiculos.length > 0 && (
+                        <div>
+                          <h5 className="underline">Vehículos</h5>
+                          <div className="overflow-x-auto">
+                            <div className="inline-block min-w-full align-middle">
+                              <div className="overflow-hidden rounded-md bg-gray-50 p-2">
+                                <table className="min-w-full text-gray-900 text-[10px]">
+                                  <thead className="bg-gray-50 text-left font-normal">
+                                    <tr>
+                                      <th className="px-3 py-2 font-medium">Dominio</th>
+                                      <th className="px-3 py-2 font-medium">Marca</th>
+                                      <th className="px-3 py-2 font-medium">Modelo</th>
+                                      <th className="px-3 py-2 font-medium">Color</th>
+                                      <th className="px-3 py-2 font-medium">Estado</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody className="divide-y divide-gray-200 bg-white">
+                                    {prov.vehiculos.map((v: any) => (
+                                      <tr key={v.id}>
+                                        <td className="whitespace-nowrap px-3 py-2">{v.dominio}</td>
+                                        <td className="whitespace-nowrap px-3 py-2">{v.marca}</td>
+                                        <td className="whitespace-nowrap px-3 py-2">{v.modelo}</td>
+                                        <td className="whitespace-nowrap px-3 py-2">{v.color}</td>
+                                        <td className="whitespace-nowrap px-3 py-2">{v.status}</td>
+                                      </tr>
+                                    ))}
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
                     </div>
-                  )}
+                  ))}
                 </div>
-              ))}
+              )}
             </div>
           ))}
         </div>
