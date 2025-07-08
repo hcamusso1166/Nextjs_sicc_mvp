@@ -50,7 +50,7 @@ export default async function Page({
         <ul className="divide-y">
           {customers.map((c) => (
             <li key={c.id} className="py-2">
-              <a href={`/integralView?customerId=${c.id}`} className="hover:underline">
+              <a href={`/dashboard/integralView?customerId=${c.id}`} className="hover:underline">
                 {c.name}
               </a>
             </li>
