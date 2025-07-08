@@ -116,33 +116,30 @@ export default async function Page({
               {req.proveedores.length > 0 && (
                 <div className="ml-4 mt-1">
                   <h4 className="font-medium">Proveedores</h4>
-                  <div className="overflow-x-auto">
-                    <div className="inline-block min-w-full align-middle">
-                      <div className="overflow-hidden rounded-md bg-gray-50 p-2">
-                        <table className="min-w-full text-gray-900 text-[10px]">
-                          <thead className="bg-gray-50 text-left font-normal">
-                            <tr>
-                              <th className="px-3 py-2 font-medium">Nombre</th>
-                              <th className="px-3 py-2 font-medium">CUIT</th>
-                              <th className="px-3 py-2 font-medium">Estado</th>
-                            </tr>
-                          </thead>
-                          <tbody className="divide-y divide-gray-200 bg-white">
-                            {req.proveedores.map((prov) => (
-                              <tr key={prov.id}>
-                                <td className="whitespace-nowrap px-3 py-2">{prov.nombre}</td>
-                                <td className="whitespace-nowrap px-3 py-2">{prov.CUIT}</td>
-                                <td className="whitespace-nowrap px-3 py-2">{prov.status}</td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-
-                    </div>
-</div>
                   {req.proveedores.map((prov) => (
                     <div key={prov.id} className="ml-4 mt-2 space-y-1">
+                                            <div className="overflow-x-auto">
+                        <div className="inline-block min-w-full align-middle">
+                          <div className="overflow-hidden rounded-md bg-gray-50 p-2">
+                            <table className="min-w-full text-gray-900 text-[10px]">
+                              <thead className="bg-gray-50 text-left font-normal">
+                                <tr>
+                                  <th className="px-3 py-2 font-medium">Nombre</th>
+                                  <th className="px-3 py-2 font-medium">CUIT</th>
+                                  <th className="px-3 py-2 font-medium">Estado</th>
+                                </tr>
+                              </thead>
+                              <tbody className="divide-y divide-gray-200 bg-white">
+                                <tr>
+                                  <td className="whitespace-nowrap px-3 py-2">{prov.nombre}</td>
+                                  <td className="whitespace-nowrap px-3 py-2">{prov.CUIT}</td>
+                                  <td className="whitespace-nowrap px-3 py-2">{prov.status}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
                       {prov.personas.length > 0 && (
                         <div>
                           <h5 className="underline">Personas</h5>
@@ -207,7 +204,6 @@ export default async function Page({
                           </div>
                         </div>
                       )}
-
                     </div>
                   ))}
                 </div>
