@@ -18,7 +18,7 @@ export default function DocumentoStatus({ status }: { status?: string }) {
       {status === 'approved' && (
         <>
           Aprobado
-          <DocumentIcon className="ml-1 w-4 text-white" />
+          <CheckIcon className="ml-1 w-4 text-white" />
         </>
       )}
       {status === 'toPresent' && (
@@ -27,7 +27,7 @@ export default function DocumentoStatus({ status }: { status?: string }) {
           <ClockIcon className="ml-1 w-4 text-white" />
         </>
       )}
-      {status === 'finalized' && (
+      {status === 'finalized' || status === 'archived' && (
         <>
           Vencido
           <XCircleIcon className="ml-1 w-4 text-white" />
@@ -36,7 +36,7 @@ export default function DocumentoStatus({ status }: { status?: string }) {
       {status === 'presented' && (
         <>
           Presentado
-          <CheckIcon className="ml-1 w-4 text-white" />
+          <DocumentIcon className="ml-1 w-4 text-white" />
         </>
       )}
     </span>
