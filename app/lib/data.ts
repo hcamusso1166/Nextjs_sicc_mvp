@@ -11,6 +11,8 @@ import {
   DirectusSite,
   DirectusRequerimiento,
   DirectusProveedor,
+  DirectusParametroDocumentoProveedor,
+  DirectusTipoDocumento,
 } from './definitions';
 import { formatCurrency } from './utils';
 
@@ -251,6 +253,42 @@ export async function fetchVehiculosByProveedor<T = any>(provId: string): Promis
   } catch (err) {
     console.error('Error al hacer fetch de vehiculos:', err);
     return [];
+  }
+}
+export async function fetchDocumentosByProveedor<T = any>(provId: string): Promise<T[]> {
+  const url = `${DIRECTUS_URL}/items/DocumentosRequeridos/${provId}`;
+  try {
+    const res = await fetch(url, { cache: 'no-store', next: { tags: ['documentos'] } });
+    if (!res.ok) throw new Error('Error al obtener documentos');
+    const data: DirectusListResponse<T> = await res.json();
+    return data.data;
+  } catch (err) {
+    console.error('Error al hacer fetch de documentos:', err);
+    return [];
+  }
+}
+
+export async function fetchParametroDocumento(id: string) {
+  try {
+    const res = await fetch(`${DIRECTUS_URL}/items/parametrosDocumentosRequeridosProveedor/${id}`, { cache: 'no-store', next: { tags: ['paramdocumento'] } });
+    if (!res.ok) throw new Error('Error al obtener parametro documento');
+    const data: { data: DirectusParametroDocumentoProveedor } = await res.json();
+    return data.data;
+  } catch (err) {
+    console.error('Error al hacer fetch de parametro documento:', err);
+    return null;
+  }
+}
+
+export async function fetchTipoDocumento(id: string) {
+  try {
+    const res = await fetch(`${DIRECTUS_URL}/items/tiposDocumentos/${id}`, { cache: 'no-store', next: { tags: ['tipodocumento'] } });
+    if (!res.ok) throw new Error('Error al obtener tipo documento');
+    const data: { data: DirectusTipoDocumento } = await res.json();
+    return data.data;
+  } catch (err) {
+    console.error('Error al hacer fetch de tipo documento:', err);
+    return null;
   }
 }
 

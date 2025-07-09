@@ -78,6 +78,27 @@ export interface DirectusVehiculo {
   color?: string;
   observaciones?: string | null;
 }
+
+export interface DirectusDocumentoRequerido {
+  id: string;
+  status: string;
+  idProveedor: string | null;
+  idParametro: string;
+  fechaPresentacion?: string;
+  validezDias?: number;
+  proximaFechaPresentacion?: string | null;
+}
+
+export interface DirectusParametroDocumentoProveedor {
+  id: string;
+  idTipoDocumento: string;
+}
+
+export interface DirectusTipoDocumento {
+  id: string;
+  nombreDocumento: string;
+}
+
 export interface DirectusListResponse<T> {
   data: T[];
   meta?: {
