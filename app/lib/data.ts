@@ -256,7 +256,7 @@ export async function fetchVehiculosByProveedor<T = any>(provId: string): Promis
   }
 }
 export async function fetchDocumentosByProveedor<T = any>(provId: string): Promise<T[]> {
-  const url = `${DIRECTUS_URL}/items/DocumentosRequeridos/${provId}`;
+  const url = `${DIRECTUS_URL}/items/DocumentosRequeridos?filter%5BidProveedor%5D%5B_eq%5D=${provId}`;
   try {
     const res = await fetch(url, { cache: 'no-store', next: { tags: ['documentos'] } });
     if (!res.ok) throw new Error('Error al obtener documentos');

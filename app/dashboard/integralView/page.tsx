@@ -165,6 +165,41 @@ export default async function Page(props: {
                           </div>
                         </div>
                       </div>
+                      {prov.documentos.length > 0 && (
+                        <div>
+                          <h5 className="underline">Documentos</h5>
+                          <div className="overflow-x-auto">
+                            <div className="inline-block min-w-full align-middle">
+                              <div className="overflow-hidden rounded-md bg-gray-50 p-2">
+                                <table className="min-w-full text-gray-900 text-[10px]">
+                                  <thead className="bg-gray-50 text-left font-normal">
+                                    <tr>
+                                      <th className="px-3 py-2 font-medium">Estado</th>
+                                      <th className="px-3 py-2 font-medium">Tipo</th>
+                                      <th className="px-3 py-2 font-medium">Documento</th>
+                                      <th className="px-3 py-2 font-medium">Fecha Pres.</th>
+                                      <th className="px-3 py-2 font-medium">Validez</th>
+                                      <th className="px-3 py-2 font-medium">Próxima</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody className="divide-y divide-gray-200 bg-white">
+                                    {prov.documentos.map((d: any) => (
+                                      <tr key={d.id}>
+                                        <td className="whitespace-nowrap px-3 py-2">{d.status}</td>
+                                        <td className="whitespace-nowrap px-3 py-2">{d.TipoDeDocumento}</td>
+                                        <td className="whitespace-nowrap px-3 py-2">{d.Documento}</td>
+                                        <td className="whitespace-nowrap px-3 py-2">{d.fechaPresentacion}</td>
+                                        <td className="whitespace-nowrap px-3 py-2">{d.validezDias}</td>
+                                        <td className="whitespace-nowrap px-3 py-2">{d.proximaFechaPresentacion}</td>
+                                      </tr>
+                                    ))}
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                       {prov.personas.length > 0 && (
                         <div>
                           <h5 className="underline">Personas</h5>
@@ -196,6 +231,8 @@ export default async function Page(props: {
                           </div>
                         </div>
                       )}
+                      
+
                       {prov.vehiculos.length > 0 && (
                         <div>
                           <h5 className="underline">Vehículos</h5>
@@ -220,41 +257,6 @@ export default async function Page(props: {
                                         <td className="whitespace-nowrap px-3 py-2">{v.modelo}</td>
                                         <td className="whitespace-nowrap px-3 py-2">{v.color}</td>
                                         <td className="whitespace-nowrap px-3 py-2">{v.status}</td>
-                                      </tr>
-                                    ))}
-                                  </tbody>
-                                </table>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      )}
-                      {prov.documentos.length > 0 && (
-                        <div>
-                          <h5 className="underline">Documentos</h5>
-                          <div className="overflow-x-auto">
-                            <div className="inline-block min-w-full align-middle">
-                              <div className="overflow-hidden rounded-md bg-gray-50 p-2">
-                                <table className="min-w-full text-gray-900 text-[10px]">
-                                  <thead className="bg-gray-50 text-left font-normal">
-                                    <tr>
-                                      <th className="px-3 py-2 font-medium">Estado</th>
-                                      <th className="px-3 py-2 font-medium">Tipo</th>
-                                      <th className="px-3 py-2 font-medium">Documento</th>
-                                      <th className="px-3 py-2 font-medium">Fecha Pres.</th>
-                                      <th className="px-3 py-2 font-medium">Validez</th>
-                                      <th className="px-3 py-2 font-medium">Próxima</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody className="divide-y divide-gray-200 bg-white">
-                                    {prov.documentos.map((d: any) => (
-                                      <tr key={d.id}>
-                                        <td className="whitespace-nowrap px-3 py-2">{d.status}</td>
-                                        <td className="whitespace-nowrap px-3 py-2">{d.TipoDeDocumento}</td>
-                                        <td className="whitespace-nowrap px-3 py-2">{d.Documento}</td>
-                                        <td className="whitespace-nowrap px-3 py-2">{d.fechaPresentacion}</td>
-                                        <td className="whitespace-nowrap px-3 py-2">{d.validezDias}</td>
-                                        <td className="whitespace-nowrap px-3 py-2">{d.proximaFechaPresentacion}</td>
                                       </tr>
                                     ))}
                                   </tbody>
