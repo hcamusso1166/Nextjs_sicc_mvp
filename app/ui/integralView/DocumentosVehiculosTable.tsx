@@ -12,7 +12,7 @@ export interface DocumentoVehiculo {
 
 export default function DocumentosVehiculosTable({ documentos }: { documentos: DocumentoVehiculo[] }) {
   return (
-    <div className="overflow-x-auto border-2">
+    <div className="overflow-x-auto border-4">
       <div className="inline-block min-w-full align-middle">
         <div className="overflow-hidden rounded-md bg-gray-50 p-2">
           <table className="min-w-full text-gray-900 text-[10px]">

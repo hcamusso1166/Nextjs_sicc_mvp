@@ -1,4 +1,5 @@
 import React from 'react';
+import DocumentoStatus from './status';
 
 export interface Documento {
   id: string;
@@ -29,7 +30,9 @@ export default function DocumentosTable({ documentos }: { documentos: Documento[
             <tbody className="divide-y divide-gray-200 bg-white">
               {documentos.map((d) => (
                 <tr key={d.id}>
-                  <td className="whitespace-nowrap px-3 py-2">{d.status}</td>
+                  <td className="whitespace-nowrap px-3 py-2">
+                    <DocumentoStatus status={d.status} />
+                  </td>
                   <td className="whitespace-nowrap px-3 py-2">{d.TipoDeDocumento}</td>
                   <td className="whitespace-nowrap px-3 py-2">{d.Documento}</td>
                   <td className="whitespace-nowrap px-3 py-2">{d.fechaPresentacion}</td>
