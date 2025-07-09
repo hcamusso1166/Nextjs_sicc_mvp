@@ -88,6 +88,25 @@ export interface DirectusDocumentoRequerido {
   validezDias?: number;
   proximaFechaPresentacion?: string | null;
 }
+export interface DirectusDocumentoPersona {
+  id: string;
+  status: string;
+  idPersona: string | null;
+  idParametro: string;
+  fechaPresentacion?: string;
+  validezDias?: number;
+  proximaFechaPresentacion?: string | null;
+}
+
+export interface DirectusDocumentoVehiculo {
+  id: string;
+  status: string;
+  idVehiculo: string | null;
+  idParametro: string;
+  fechaPresentacion?: string;
+  validezDias?: number;
+  proximaFechaPresentacion?: string | null;
+}
 
 export interface DirectusParametroDocumentoProveedor {
   id: string;
@@ -107,6 +126,29 @@ export interface DirectusListResponse<T> {
   };
 }
 
+export interface SiteTree {
+  id: string;
+  nombre?: string;
+  fechaInicio?: string;
+  requerimientos: RequerimientoTree[];
+}
+
+export interface RequerimientoTree {
+  id: string;
+  nombre?: string;
+  fechaInicio?: string;
+  proveedores: ProveedorTree[];
+}
+
+export interface ProveedorTree {
+  id: string;
+  nombre?: string;
+  CUIT?: string;
+  personas: any[];
+  vehiculos: any[];
+  documentos: any[];
+  status?: string;
+}
 export type Invoice = {
   id: string;
   customer_id: string;

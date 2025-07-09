@@ -11,6 +11,8 @@ import {
   fetchPersonasByProveedor,
   fetchVehiculosByProveedor,
   fetchDocumentosByProveedor,
+  fetchDocumentosByPersona,
+  fetchDocumentosByVehiculo,
   fetchParametroDocumento,
   fetchTipoDocumento,
 } from '@/app/lib/data';
@@ -18,30 +20,11 @@ import ProveedorTable from '@/app/ui/integralView/ProveedorTable';
 import DocumentosTable from '@/app/ui/integralView/DocumentosTable';
 import PersonasTable from '@/app/ui/integralView/PersonasTable';
 import VehiculosTable from '@/app/ui/integralView/VehiculosTable';
+import DocumentosPersonasTable from '@/app/ui/integralView/DocumentosPersonasTable';
+import DocumentosVehiculosTable from '@/app/ui/integralView/DocumentosVehiculosTable';
 
-interface SiteTree {
-  id: string;
-  nombre?: string;
-  fechaInicio?: string;
-  requerimientos: RequerimientoTree[];
-}
+import { SiteTree, RequerimientoTree, ProveedorTree } from '@/app/lib/definitions'; 
 
-interface RequerimientoTree {
-  id: string;
-  nombre?: string;
-  fechaInicio?: string;
-  proveedores: ProveedorTree[];
-}
-
-interface ProveedorTree {
-  id: string;
-  nombre?: string;
-  CUIT?: string;
-  personas: any[];
-  vehiculos: any[];
-  documentos: any[];
-  status?: string;
-}
 
 export default async function Page(props: {
   searchParams?: Promise<{ query?: string; customerId?: string }>;
@@ -85,8 +68,50 @@ export default async function Page(props: {
           const provsRaw = await fetchProveedoresByRequerimiento(req.id);
           const proveedores: ProveedorTree[] = await Promise.all(
             provsRaw.map(async (prov) => {
-              const personas = await fetchPersonasByProveedor(prov.id);
-              const vehiculos = await fetchVehiculosByProveedor(prov.id);
+              const personasRaw = await fetchPersonasByProveedor(prov.id);
+              const personas = await Promise.all(
+                personasRaw.map(async (per: any) => {
+                  const docPerRaw = await fetchDocumentosByPersona(per.id);
+                  const documentos = await Promise.all(
+                    docPerRaw.map(async (d: any) => {
+                      const param = await fetchParametroDocumento(d.idParametro);
+                      let nombreDocumento = '';
+                      let tipoDocumento = '';
+                      if (param?.idTipoDocumento) {
+                        tipoDocumento = param.idTipoDocumento;
+                        const tipo = await fetchTipoDocumento(param.idTipoDocumento);
+                        if (tipo?.nombreDocumento) {
+                          nombreDocumento = tipo.nombreDocumento;
+                        }
+                      }
+                      return { ...d, TipoDeDocumento: tipoDocumento, Documento: nombreDocumento };
+                    })
+                  );
+                  return { ...per, documentos };
+                })
+              );
+              const vehiculosRaw = await fetchVehiculosByProveedor(prov.id);
+              const vehiculos = await Promise.all(
+                vehiculosRaw.map(async (veh: any) => {
+                  const docVehRaw = await fetchDocumentosByVehiculo(veh.id);
+                  const documentos = await Promise.all(
+                    docVehRaw.map(async (d: any) => {
+                      const param = await fetchParametroDocumento(d.idParametro);
+                      let nombreDocumento = '';
+                      let tipoDocumento = '';
+                      if (param?.idTipoDocumento) {
+                        tipoDocumento = param.idTipoDocumento;
+                        const tipo = await fetchTipoDocumento(param.idTipoDocumento);
+                        if (tipo?.nombreDocumento) {
+                          nombreDocumento = tipo.nombreDocumento;
+                        }
+                      }
+                      return { ...d, TipoDeDocumento: tipoDocumento, Documento: nombreDocumento };
+                    })
+                  );
+                  return { ...veh, documentos };
+                })
+              );
               const docsRaw = await fetchDocumentosByProveedor(prov.id);
               const documentos = await Promise.all(
                 docsRaw.map(async (d: any) => {
@@ -134,10 +159,10 @@ export default async function Page(props: {
       <h1 className={`${lusitana.className} text-lg`}>Cliente: {customer.name}</h1>
       <p>CUIT: {customer.CUIT} - Estado: {customer.status}</p>
       {sites.map((site) => (
-        <div key={site.id} className="border rounded p-2">
+        <div key={site.id} className="border-4 rounded p-2">
           <h2 className="font-semibold">Site: {site.nombre}</h2>
           {site.requerimientos.map((req) => (
-            <div key={req.id} className="ml-4 mt-2">
+            <div key={req.id} className="ml-4 mt-2 border-[3px]">
               <h3 className="font-medium">Requerimiento: {req.nombre}</h3>
                 {req.fechaInicio && (
                 <p className="ml-2">Fecha de Inicio: {req.fechaInicio}</p>
@@ -146,7 +171,7 @@ export default async function Page(props: {
                 <div className="ml-4 mt-1">
                   <h4 className="font-medium">Proveedores</h4>
                   {req.proveedores.map((prov) => (
-                    <div key={prov.id} className="ml-4 mt-2 space-y-1">
+                    <div key={prov.id} className="ml-4 mt-2 space-y-1 border-2">
                       <ProveedorTable proveedor={prov} />
                       {prov.documentos.length > 0 && (
                         <div>
@@ -158,12 +183,28 @@ export default async function Page(props: {
                         <div>
                           <h5 className="underline">Personas</h5>
                           <PersonasTable personas={prov.personas} />
+                            {prov.personas.map((per: any) => (
+                            per.documentos?.length > 0 && (
+                              <div key={per.id} className="ml-4">
+                                <h6 className="italic">Documentos de {per.nombre}</h6>
+                                <DocumentosPersonasTable documentos={per.documentos} />
+                              </div>
+                            )
+                          ))}
                         </div>
                       )}
                       {prov.vehiculos.length > 0 && (
                         <div>
                           <h5 className="underline">Vehículos</h5>
                           <VehiculosTable vehiculos={prov.vehiculos} />
+                            {prov.vehiculos.map((veh: any) => (
+                            veh.documentos?.length > 0 && (
+                              <div key={veh.id} className="ml-4">
+                                <h6 className="italic">Documentos de {veh.dominio}</h6>
+                                <DocumentosVehiculosTable documentos={veh.documentos} />
+                              </div>
+                            )
+                          ))}
                         </div>
                       )}
                     </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export interface Documento {
+export interface DocumentoVehiculo {
   id: string;
   status?: string;
   TipoDeDocumento?: string;
@@ -10,7 +10,7 @@ export interface Documento {
   proximaFechaPresentacion?: string | null;
 }
 
-export default function DocumentosTable({ documentos }: { documentos: Documento[] }) {
+export default function DocumentosVehiculosTable({ documentos }: { documentos: DocumentoVehiculo[] }) {
   return (
     <div className="overflow-x-auto border-2">
       <div className="inline-block min-w-full align-middle">

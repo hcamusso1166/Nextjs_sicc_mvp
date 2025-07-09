@@ -267,6 +267,33 @@ export async function fetchDocumentosByProveedor<T = any>(provId: string): Promi
     return [];
   }
 }
+export async function fetchDocumentosByPersona<T = any>(personaId: string): Promise<T[]> {
+  const url = `${DIRECTUS_URL}/items/documentosRequeridosPersonas/${personaId}`;
+  try {
+    const res = await fetch(url, { cache: 'no-store', next: { tags: ['documentospersona'] } });
+    if (!res.ok) throw new Error('Error al obtener documentos de persona');
+    const data: any = await res.json();
+    const docs = Array.isArray(data.data) ? data.data : data.data ? [data.data] : [];
+    return docs as T[];
+  } catch (err) {
+    console.error('Error al hacer fetch de documentos de persona:', err);
+    return [];
+  }
+}
+
+export async function fetchDocumentosByVehiculo<T = any>(vehiculoId: string): Promise<T[]> {
+  const url = `${DIRECTUS_URL}/items/documentosRequeridosVehiculos/${vehiculoId}`;
+  try {
+    const res = await fetch(url, { cache: 'no-store', next: { tags: ['documentosvehiculo'] } });
+    if (!res.ok) throw new Error('Error al obtener documentos de vehiculo');
+    const data: any = await res.json();
+    const docs = Array.isArray(data.data) ? data.data : data.data ? [data.data] : [];
+    return docs as T[];
+  } catch (err) {
+    console.error('Error al hacer fetch de documentos de vehiculo:', err);
+    return [];
+  }
+}
 
 export async function fetchParametroDocumento(id: string) {
   try {
