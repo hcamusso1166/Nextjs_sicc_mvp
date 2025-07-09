@@ -41,7 +41,7 @@ export default function DocumentoStatus({ status }: { status?: string }) {
       )}
         { status === 'archived' && (
         <>
-          Archived
+          Archivado
           <XCircleIcon className="ml-1 w-4 text-white" />
         </>
       )}
