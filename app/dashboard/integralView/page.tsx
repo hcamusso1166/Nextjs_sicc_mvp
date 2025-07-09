@@ -35,11 +35,10 @@ interface ProveedorTree {
   status?: string;
 }
 
-export default async function Page({
-  searchParams,
-}: {
-  searchParams?: { query?: string; customerId?: string };
+export default async function Page(props: {
+  searchParams?: Promise<{ query?: string; customerId?: string }>;
 }) {
+    const searchParams = await props.searchParams;
   const query = searchParams?.query || '';
   const customerId = searchParams?.customerId;
 
