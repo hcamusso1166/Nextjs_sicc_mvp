@@ -14,6 +14,10 @@ import {
   fetchParametroDocumento,
   fetchTipoDocumento,
 } from '@/app/lib/data';
+import ProveedorTable from '@/app/ui/integralView/ProveedorTable';
+import DocumentosTable from '@/app/ui/integralView/DocumentosTable';
+import PersonasTable from '@/app/ui/integralView/PersonasTable';
+import VehiculosTable from '@/app/ui/integralView/VehiculosTable';
 
 interface SiteTree {
   id: string;
@@ -143,127 +147,23 @@ export default async function Page(props: {
                   <h4 className="font-medium">Proveedores</h4>
                   {req.proveedores.map((prov) => (
                     <div key={prov.id} className="ml-4 mt-2 space-y-1">
-                                            <div className="overflow-x-auto">
-                        <div className="inline-block min-w-full align-middle">
-                          <div className="overflow-hidden rounded-md bg-gray-50 p-2">
-                            <table className="min-w-full text-gray-900 text-[10px]">
-                              <thead className="bg-gray-50 text-left font-normal">
-                                <tr>
-                                  <th className="px-3 py-2 font-medium">Nombre</th>
-                                  <th className="px-3 py-2 font-medium">CUIT</th>
-                                  <th className="px-3 py-2 font-medium">Estado</th>
-                                </tr>
-                              </thead>
-                              <tbody className="divide-y divide-gray-200 bg-white">
-                                <tr>
-                                  <td className="whitespace-nowrap px-3 py-2">{prov.nombre}</td>
-                                  <td className="whitespace-nowrap px-3 py-2">{prov.CUIT}</td>
-                                  <td className="whitespace-nowrap px-3 py-2">{prov.status}</td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
-                      </div>
+                      <ProveedorTable proveedor={prov} />
                       {prov.documentos.length > 0 && (
                         <div>
                           <h5 className="underline">Documentos</h5>
-                          <div className="overflow-x-auto">
-                            <div className="inline-block min-w-full align-middle">
-                              <div className="overflow-hidden rounded-md bg-gray-50 p-2">
-                                <table className="min-w-full text-gray-900 text-[10px]">
-                                  <thead className="bg-gray-50 text-left font-normal">
-                                    <tr>
-                                      <th className="px-3 py-2 font-medium">Estado</th>
-                                      <th className="px-3 py-2 font-medium">Tipo</th>
-                                      <th className="px-3 py-2 font-medium">Documento</th>
-                                      <th className="px-3 py-2 font-medium">Fecha Pres.</th>
-                                      <th className="px-3 py-2 font-medium">Validez</th>
-                                      <th className="px-3 py-2 font-medium">Próxima</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody className="divide-y divide-gray-200 bg-white">
-                                    {prov.documentos.map((d: any) => (
-                                      <tr key={d.id}>
-                                        <td className="whitespace-nowrap px-3 py-2">{d.status}</td>
-                                        <td className="whitespace-nowrap px-3 py-2">{d.TipoDeDocumento}</td>
-                                        <td className="whitespace-nowrap px-3 py-2">{d.Documento}</td>
-                                        <td className="whitespace-nowrap px-3 py-2">{d.fechaPresentacion}</td>
-                                        <td className="whitespace-nowrap px-3 py-2">{d.validezDias}</td>
-                                        <td className="whitespace-nowrap px-3 py-2">{d.proximaFechaPresentacion}</td>
-                                      </tr>
-                                    ))}
-                                  </tbody>
-                                </table>
-                              </div>
-                            </div>
-                          </div>
+                          <DocumentosTable documentos={prov.documentos} />
                         </div>
                       )}
                       {prov.personas.length > 0 && (
                         <div>
                           <h5 className="underline">Personas</h5>
-                          <div className="overflow-x-auto">
-                            <div className="inline-block min-w-full align-middle">
-                              <div className="overflow-hidden rounded-md bg-gray-50 p-2">
-                                <table className="min-w-full text-gray-900 text-[10px]">
-                                  <thead className="bg-gray-50 text-left font-normal">
-                                    <tr>
-                                      <th className="px-3 py-2 font-medium">Nombre</th>
-                                      <th className="px-3 py-2 font-medium">Apellido</th>
-                                      <th className="px-3 py-2 font-medium">DNI</th>
-                                      <th className="px-3 py-2 font-medium">Estado</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody className="divide-y divide-gray-200 bg-white">
-                                    {prov.personas.map((p: any) => (
-                                      <tr key={p.id}>
-                                        <td className="whitespace-nowrap px-3 py-2">{p.nombre}</td>
-                                        <td className="whitespace-nowrap px-3 py-2">{p.apellido}</td>
-                                        <td className="whitespace-nowrap px-3 py-2">{p.DNI}</td>
-                                        <td className="whitespace-nowrap px-3 py-2">{p.status}</td>
-                                      </tr>
-                                    ))}
-                                  </tbody>
-                                </table>
-                              </div>
-                            </div>
-                          </div>
+                          <PersonasTable personas={prov.personas} />
                         </div>
                       )}
-                      
-
                       {prov.vehiculos.length > 0 && (
                         <div>
                           <h5 className="underline">Vehículos</h5>
-                          <div className="overflow-x-auto">
-                            <div className="inline-block min-w-full align-middle">
-                              <div className="overflow-hidden rounded-md bg-gray-50 p-2">
-                                <table className="min-w-full text-gray-900 text-[10px]">
-                                  <thead className="bg-gray-50 text-left font-normal">
-                                    <tr>
-                                      <th className="px-3 py-2 font-medium">Dominio</th>
-                                      <th className="px-3 py-2 font-medium">Marca</th>
-                                      <th className="px-3 py-2 font-medium">Modelo</th>
-                                      <th className="px-3 py-2 font-medium">Color</th>
-                                      <th className="px-3 py-2 font-medium">Estado</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody className="divide-y divide-gray-200 bg-white">
-                                    {prov.vehiculos.map((v: any) => (
-                                      <tr key={v.id}>
-                                        <td className="whitespace-nowrap px-3 py-2">{v.dominio}</td>
-                                        <td className="whitespace-nowrap px-3 py-2">{v.marca}</td>
-                                        <td className="whitespace-nowrap px-3 py-2">{v.modelo}</td>
-                                        <td className="whitespace-nowrap px-3 py-2">{v.color}</td>
-                                        <td className="whitespace-nowrap px-3 py-2">{v.status}</td>
-                                      </tr>
-                                    ))}
-                                  </tbody>
-                                </table>
-                              </div>
-                            </div>
-                          </div>
+                          <VehiculosTable vehiculos={prov.vehiculos} />
                         </div>
                       )}
                     </div>
