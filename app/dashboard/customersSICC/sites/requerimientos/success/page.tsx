@@ -4,11 +4,12 @@ import { fetchRequerimientoById,fetchSiteById, fetchCustomerSICCById } from '@/a
 export default async function Page({
   searchParams,
 }: {
-  searchParams?: { id?: string; siteId?: string; customerId?: string };
+  searchParams?: Promise<{ id?: string; siteId?: string; customerId?: string }>;
 }) {
-  const id = searchParams?.id || '';
-  const siteId = searchParams?.siteId || '';
-  const customerId = searchParams?.customerId || '';
+  const params = await searchParams;
+  const id = params?.id || '';
+  const siteId = params?.siteId || '';
+  const customerId = params?.customerId || '';
   const requerimiento = id ? await fetchRequerimientoById(id) : null;
   const site = siteId ? await fetchSiteById(siteId) : null;
   const customer = customerId ? await fetchCustomerSICCById(customerId) : null;

@@ -32,6 +32,7 @@ interface ProveedorTree {
   CUIT?: string;
   personas: any[];
   vehiculos: any[];
+  status?: string;
 }
 
 export default async function Page({
