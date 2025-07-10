@@ -93,6 +93,37 @@ export async function fetchCardData() {
     throw new Error('Failed to fetch card data.');
   }
 }
+export async function fetchDashboardCounts() {
+  try {
+    const endpoints = [
+      { url: `${DIRECTUS_URL}/items/Clientes?limit=1&meta=filter_count`, tag: 'customersSICC' },
+      { url: `${DIRECTUS_URL}/items/sites?limit=1&meta=filter_count`, tag: 'sites' },
+      { url: `${DIRECTUS_URL}/items/requerimiento?limit=1&meta=filter_count`, tag: 'requerimientos' },
+      { url: `${DIRECTUS_URL}/items/proveedor?limit=1&meta=filter_count`, tag: 'proveedores' },
+    ];
+
+    const responses = await Promise.all(
+      endpoints.map((e) =>
+        fetch(e.url, { cache: 'no-store', next: { tags: [e.tag] } }),
+      ),
+    );
+
+    const counts = await Promise.all(
+      responses.map(async (res) => {
+        if (!res.ok) return 0;
+        const data: DirectusListResponse<any> = await res.json();
+        return data?.meta?.filter_count ?? 0;
+      }),
+    );
+
+    const [clientes, sites, requerimientos, proveedores] = counts;
+
+    return { clientes, sites, requerimientos, proveedores };
+  } catch (error) {
+    console.error('Failed to fetch dashboard counts:', error);
+    return { clientes: 0, sites: 0, requerimientos: 0, proveedores: 0 };
+  }
+}
 
 const ITEMS_PER_PAGE = 6;
 export async function fetchFilteredInvoices(
