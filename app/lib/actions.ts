@@ -193,6 +193,33 @@ export async function createRequerimiento(formData: FormData) {
   }
   return redirect('/dashboard/customersSICC');
 }
+export async function createRequerimientoManager(formData: FormData) {
+  const nombre = String(formData.get('nombre') || '');
+  const siteId = String(formData.get('idSites') || '');
+  const customerId = String(formData.get('customerId') || '');
+  const body = {
+    status: formData.get('status'),
+    idSites: siteId,
+    nombre,
+    urlSlug: slugify(nombre),
+  };
+  const response = await fetch(`${DIRECTUS_URL}/items/requerimiento`, {
+    next: { revalidate: 0 },
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  const data = await response.json().catch(() => ({}));
+  const id = data?.data?.id as string | undefined;
+  revalidateTag('requerimientos');
+  revalidatePath('/dashboard/manager');
+  if (id) {
+    return redirect(
+      `/dashboard/manager/sites/requerimientos/success?id=${id}&siteId=${siteId}&customerId=${customerId}`,
+    );
+  }
+  return redirect(`/dashboard/manager?customerId=${customerId}`);
+}
 
 // Generic actions for customers
 export async function createCustomer(formData: FormData) {
