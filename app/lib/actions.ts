@@ -159,13 +159,13 @@ export async function createSiteManager(formData: FormData) {
   const data = await response.json().catch(() => ({}));
   const id = data?.data?.id as string | undefined;
   revalidateTag('sites');
-  revalidatePath('/dashboard/integralManager');
+  revalidatePath('/dashboard/manager');
   if (id) {
     return redirect(
-      `/dashboard/integralManager/sites/success?id=${id}&customerId=${customerId}`,
+      `/dashboard/manager/sites/success?id=${id}&customerId=${customerId}`,
     );
   }
-  return redirect(`/dashboard/integralManager?customerId=${customerId}`);
+  return redirect(`/dashboard/manager?customerId=${customerId}`);
 }
 
 export async function createRequerimiento(formData: FormData) {
