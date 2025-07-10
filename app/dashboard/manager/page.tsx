@@ -186,7 +186,7 @@ export default async function Page(props: {
               {req.proveedores.length > 0 && (
                 <div className="ml-4 mt-1">
                   <div className="flex items-center gap-2">
-                    <h4 className="font-medium">Proveedores</h4>
+                    <h4 className="font-medium">Proveedores:</h4>
                     <CrearDocsRequeridosButton
                       reqId={req.id}
                       siteId={site.id}
