@@ -2,9 +2,19 @@ import Link from 'next/link';
 import { Button } from '@/app/ui/button';
 import { createSite } from '@/app/lib/actions';
 
-export default function Form({ customerId }: { customerId: string }) {
+type Props = {
+  customerId: string;
+  cancelHref?: string;
+  action?: (formData: FormData) => Promise<void>;
+};
+
+export default function Form({
+  customerId,
+  cancelHref = '/dashboard/customersSICC',
+  action = createSite,
+}: Props) {
   return (
-    <form action={createSite}>
+    <form action={action}>
       <input type="hidden" name="idCliente" value={customerId} />
       <div className="rounded-md bg-gray-50 p-4 md:p-6 grid grid-cols-1 gap-4 md:grid-cols-2 text-xs">
         <div>
@@ -20,7 +30,12 @@ export default function Form({ customerId }: { customerId: string }) {
         </div>
       </div>
       <div className="mt-6 flex justify-end gap-4">
-        <Link href="/dashboard/customersSICC" className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 hover:bg-gray-200">Cancelar</Link>
+        <Link
+          href={cancelHref}
+          className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 hover:bg-gray-200"
+        >
+          Cancelar
+        </Link>
         <Button type="submit">Crear SITE</Button>
       </div>
     </form>

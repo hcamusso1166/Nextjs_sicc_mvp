@@ -139,6 +139,35 @@ const response = await fetch(`${DIRECTUS_URL}/items/sites`, {
   }
   return redirect('/dashboard/customersSICC');
 }
+
+export async function createSiteManager(formData: FormData) {
+  const nombre = String(formData.get('nombre') || '');
+  const customerId = String(formData.get('idCliente') || '');
+  const body = {
+    status: formData.get('status'),
+    idCliente: customerId,
+    nombre,
+    urlSlug: slugify(nombre),
+  };
+
+  const response = await fetch(`${DIRECTUS_URL}/items/sites`, {
+    next: { revalidate: 0 },
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  const data = await response.json().catch(() => ({}));
+  const id = data?.data?.id as string | undefined;
+  revalidateTag('sites');
+  revalidatePath('/dashboard/integralManager');
+  if (id) {
+    return redirect(
+      `/dashboard/integralManager/sites/success?id=${id}&customerId=${customerId}`,
+    );
+  }
+  return redirect(`/dashboard/integralManager?customerId=${customerId}`);
+}
+
 export async function createRequerimiento(formData: FormData) {
   const nombre = String(formData.get('nombre') || '');
   const siteId = String(formData.get('idSites') || '');
