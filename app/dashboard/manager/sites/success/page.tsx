@@ -18,8 +18,8 @@ export default async function Page({
         <strong>{customer?.name || ''}</strong> registrada con éxito.
       </div>
       <div className="flex gap-4">
-        <Link href={`/dashboard/integralManager?customerId=${customerId}`} className="underline">Volver</Link>
-        <Link href={`/dashboard/integralManager/sites?customerId=${customerId}`} className="underline">Crear nuevo Site</Link>
+        <Link href={`/dashboard/manager?customerId=${customerId}`} className="underline">Volver</Link>
+        <Link href={`/dashboard/manager/sites?customerId=${customerId}`} className="underline">Crear nuevo Site</Link>
       </div>
     </main>
   );

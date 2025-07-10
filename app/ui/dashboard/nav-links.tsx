@@ -19,7 +19,7 @@ const links = [
   { name: 'Invoices', href: '/dashboard/invoices', icon: DocumentDuplicateIcon },
   { name: 'Customers SICC', href: '/dashboard/customersSICC', icon: UserGroupIcon },
   { name: 'Integral View', href: '/dashboard/integralView', icon: EyeIcon },
-  { name: 'Integral Manager', href: '/dashboard/IntegralManager', icon: PencilSquareIcon },
+  { name: 'Manager', href: '/dashboard/manager', icon: PencilSquareIcon },
 ];
 
 export default function NavLinks() {
