@@ -22,7 +22,7 @@ import PersonasTable from '@/app/ui/integralView/PersonasTable';
 import VehiculosTable from '@/app/ui/integralView/VehiculosTable';
 import DocumentosPersonasTable from '@/app/ui/integralView/DocumentosPersonasTable';
 import DocumentosVehiculosTable from '@/app/ui/integralView/DocumentosVehiculosTable';
-import { CreateSiteManager } from '@/app/ui/integralManager/buttons';
+import { CreateSiteManager } from '@/app/ui/IntegralManager/buttons';
 
 import { SiteTree, RequerimientoTree, ProveedorTree } from '@/app/lib/definitions';
 
@@ -44,7 +44,7 @@ export default async function Page(props: {
         <ul className="divide-y">
           {customers.map((c) => (
             <li key={c.id} className="py-2">
-              <a href={`/dashboard/integralManager?customerId=${c.id}`} className="hover:underline">
+              <a href={`/dashboard/IntegralManager?customerId=${c.id}`} className="hover:underline">
                 {c.name}
               </a>
             </li>

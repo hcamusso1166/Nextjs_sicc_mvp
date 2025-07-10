@@ -13,7 +13,7 @@ export default async function Page({
       <Form
         customerId={customerId}
         action={createSiteManager}
-        cancelHref={`/dashboard/integralManager?customerId=${customerId}`}
+        cancelHref={`/dashboard/IntegralManager?customerId=${customerId}`}
       />
     </main>
   );
