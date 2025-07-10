@@ -22,7 +22,7 @@ import PersonasTable from '@/app/ui/integralView/PersonasTable';
 import VehiculosTable from '@/app/ui/integralView/VehiculosTable';
 import DocumentosPersonasTable from '@/app/ui/integralView/DocumentosPersonasTable';
 import DocumentosVehiculosTable from '@/app/ui/integralView/DocumentosVehiculosTable';
-import { CreateSiteManager } from '@/app/ui/IntegralManager/buttons';
+import { CreateSiteManager } from '@/app/ui/integralManager/buttons';
 
 import { SiteTree, RequerimientoTree, ProveedorTree } from '@/app/lib/definitions';
 
