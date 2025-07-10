@@ -22,7 +22,7 @@ import PersonasTable from '@/app/ui/integralView/PersonasTable';
 import VehiculosTable from '@/app/ui/integralView/VehiculosTable';
 import DocumentosPersonasTable from '@/app/ui/integralView/DocumentosPersonasTable';
 import DocumentosVehiculosTable from '@/app/ui/integralView/DocumentosVehiculosTable';
-import { CreateSiteManager,CreateRequerimientoManager, } from '@/app/ui/manager/buttons';
+import { CreateSiteManager,CreateRequerimientoManager, CreateProveedorManager,} from '@/app/ui/manager/buttons';
 
 import { SiteTree, RequerimientoTree, ProveedorTree } from '@/app/lib/definitions';
 
@@ -172,7 +172,14 @@ export default async function Page(props: {
           </div>
           {site.requerimientos.map((req) => (
             <div key={req.id} className="ml-4 mt-2 border-[3px]">
-              <h3 className="font-medium">Requerimiento: {req.nombre}</h3>
+              <div className="flex items-center justify-between">
+                <h3 className="font-medium">Requerimiento: {req.nombre}</h3>
+                <CreateProveedorManager
+                  reqId={req.id}
+                  siteId={site.id}
+                  customerId={customerId}
+                />
+              </div>
               {req.fechaInicio && (
                 <p className="ml-2">Fecha de Inicio: {req.fechaInicio}</p>
               )}

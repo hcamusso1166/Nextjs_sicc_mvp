@@ -104,7 +104,7 @@ export async function updateCustomerSICC(id: string, formData: FormData) {
     body: JSON.stringify(body),
   });
   revalidateTag('customersSICC');
-  revalidatePath('/dashboard/customersSICC');
+  revalidatePath('/dashboard/manager');
   return redirect('/dashboard/customersSICC');
 }
 
@@ -220,7 +220,39 @@ export async function createRequerimientoManager(formData: FormData) {
   }
   return redirect(`/dashboard/manager?customerId=${customerId}`);
 }
+export async function createProveedor(formData: FormData) {
+  const nombre = String(formData.get('nombre') || '');
+  const reqId = String(formData.get('idRequerimientos') || '');
+  const body = {
+    status: formData.get('status'),
+    idRequerimientos: reqId,
+    nombre,
+    CUIT: formData.get('CUIT'),
+    urlSlug: slugify(nombre),
+  };
+  const response = await fetch(`${DIRECTUS_URL}/items/proveedor`, {
+    next: { revalidate: 0 },
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  const data = await response.json().catch(() => ({}));
+  const id = data?.data?.id as string | undefined;
+  revalidateTag('proveedores');
+  revalidatePath('/dashboard/manager');
+  const customerId = String(formData.get('customerId') || '');
+  const siteId = String(formData.get('siteId') || '');
+  if (id) {
+    return redirect(
+      `/dashboard/manager/sites/requerimientos/proveedores/success?id=${id}&reqId=${reqId}&siteId=${siteId}&customerId=${customerId}`,
+    );
+  }
+  return redirect(`/dashboard/manager?customerId=${customerId}`);
+}
 
+export async function createProveedorManager(formData: FormData) {
+  return createProveedor(formData);
+}
 // Generic actions for customers
 export async function createCustomer(formData: FormData) {
   const name = String(formData.get('name') || '');

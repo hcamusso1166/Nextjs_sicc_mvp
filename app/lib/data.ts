@@ -229,6 +229,20 @@ export async function fetchProveedoresByRequerimiento<T extends DirectusProveedo
     return [];
   }
 }
+export async function fetchProveedorById<T extends DirectusProveedor = DirectusProveedor>(id: string): Promise<T | null> {
+  try {
+    const res = await fetch(`${DIRECTUS_URL}/items/proveedor/${id}`, {
+      cache: 'no-store',
+      next: { tags: ['proveedores'] },
+    });
+    if (!res.ok) throw new Error('Error al obtener proveedor');
+    const data: { data: T } = await res.json();
+    return data.data;
+  } catch (err) {
+    console.error('Error al hacer fetch de proveedor:', err);
+    return null;
+  }
+}
 
 export async function fetchPersonasByProveedor<T = any>(provId: string): Promise<T[]> {
   const url = `${DIRECTUS_URL}/items/persona?filter%5BidProveedor%5D%5B_eq%5D=${provId}`;
