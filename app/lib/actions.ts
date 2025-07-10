@@ -51,7 +51,13 @@ export async function updateInvoice(id: string, formData: FormData) {
   redirect('/dashboard/invoices');
 }
 
-import { DIRECTUS_URL } from './data';
+import {
+  DIRECTUS_URL,
+  fetchProveedoresByRequerimiento,
+  fetchDocumentosByProveedor,
+} from './data';
+import {
+  DirectusParametroDocumentoProveedor, DirectusTipoDocumento, } from './definitions';
 
 export async function createCustomerSICC(formData: FormData) {
   const name = String(formData.get('name') || '');
@@ -252,6 +258,50 @@ export async function createProveedor(formData: FormData) {
 
 export async function createProveedorManager(formData: FormData) {
   return createProveedor(formData);
+}
+export async function generarDocumentosRequeridos(
+  reqId: string,
+): Promise<string[]> {
+  const proveedores = await fetchProveedoresByRequerimiento(reqId);
+  const fechaHoy = new Date().toISOString().split('T')[0];
+  const urlParams = `${DIRECTUS_URL}/items/parametrosDocumentosRequeridosProveedor?filter%5BidTipoEntidad%5D%5B_in%5D=1,2&filter%5BfechaDesde%5D%5B_lte%5D=${fechaHoy}&filter%5BfechaHasta%5D%5B_gte%5D=${fechaHoy}`;
+  const resParam = await fetch(urlParams, { cache: 'no-store' });
+  const dataParam: { data: DirectusParametroDocumentoProveedor[] } =
+    await resParam.json().catch(() => ({ data: [] }));
+  const parametros = dataParam.data || [];
+  const resultados: string[] = [];
+  for (const prov of proveedores) {
+    const docs = await fetchDocumentosByProveedor(prov.id);
+    if (docs.length === 0) {
+      for (const param of parametros) {
+        let validezDias: number | undefined;
+        if (param.idTipoDocumento) {
+          const tipoRes = await fetch(
+            `${DIRECTUS_URL}/items/tiposDocumentos/${param.idTipoDocumento}`,
+            { cache: 'no-store' },
+          );
+          const tipoData: { data: DirectusTipoDocumento & { validezDocumentoDias?: number } } =
+            await tipoRes.json().catch(() => ({ data: {} as any }));
+          validezDias = tipoData.data?.validezDocumentoDias;
+        }
+        const body = {
+          status: 'toPresent',
+          validezDias,
+          idProveedor: prov.id,
+          idParametro: param.id,
+        };
+        await fetch(`${DIRECTUS_URL}/items/DocumentosRequeridos`, {
+          next: { revalidate: 0 },
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
+      }
+      resultados.push(prov.nombre || prov.id);
+    }
+  }
+  revalidateTag('documentos');
+  return resultados;
 }
 // Generic actions for customers
 export async function createCustomer(formData: FormData) {

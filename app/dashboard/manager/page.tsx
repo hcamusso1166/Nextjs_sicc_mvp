@@ -22,7 +22,7 @@ import PersonasTable from '@/app/ui/integralView/PersonasTable';
 import VehiculosTable from '@/app/ui/integralView/VehiculosTable';
 import DocumentosPersonasTable from '@/app/ui/integralView/DocumentosPersonasTable';
 import DocumentosVehiculosTable from '@/app/ui/integralView/DocumentosVehiculosTable';
-import { CreateSiteManager,CreateRequerimientoManager, CreateProveedorManager,} from '@/app/ui/manager/buttons';
+import { CreateSiteManager,CreateRequerimientoManager, CreateProveedorManager,CrearDocsRequeridosButton,} from '@/app/ui/manager/buttons';
 
 import { SiteTree, RequerimientoTree, ProveedorTree } from '@/app/lib/definitions';
 
@@ -185,7 +185,14 @@ export default async function Page(props: {
               )}
               {req.proveedores.length > 0 && (
                 <div className="ml-4 mt-1">
-                  <h4 className="font-medium">Proveedores</h4>
+                  <div className="flex items-center gap-2">
+                    <h4 className="font-medium">Proveedores</h4>
+                    <CrearDocsRequeridosButton
+                      reqId={req.id}
+                      siteId={site.id}
+                      customerId={customerId}
+                    />
+                  </div>
                   {req.proveedores.map((prov) => (
                     <div key={prov.id} className="ml-4 mt-2 space-y-1 border-2">
                       <ProveedorTable proveedor={prov} />
