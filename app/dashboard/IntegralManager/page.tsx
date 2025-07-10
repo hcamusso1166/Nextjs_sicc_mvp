@@ -37,7 +37,7 @@ export default async function Page(props: {
     const customers = await getCustomers(query, 1);
     return (
       <div className="p-4 text-[11px]">
-        <h1 className={`${lusitana.className} text-base mb-4`}>Elegir Cliente</h1>
+        <h1 className={`${lusitana.className} text-base mb-4`}>Elegir Cliente:</h1>
         <div className="mb-4 flex gap-2">
           <Search placeholder="Buscar clientes..." />
         </div>
