@@ -13,6 +13,7 @@ import {
   DirectusProveedor,
   DirectusParametroDocumentoProveedor,
   DirectusTipoDocumento,
+  DirectusDocumentoRequerido,
 } from './definitions';
 import { formatCurrency } from './utils';
 
@@ -337,6 +338,25 @@ export async function fetchDocumentosByVehiculo<T = any>(vehiculoId: string): Pr
   } catch (err) {
     console.error('Error al hacer fetch de documentos de vehiculo:', err);
     return [];
+  }
+}
+export async function fetchDocReqProveedorCounts() {
+  try {
+    const res = await fetch(`${DIRECTUS_URL}/items/DocumentosRequeridos`, {
+      cache: 'no-store',
+      next: { tags: ['docreqproveedor'] },
+    });
+    if (!res.ok) throw new Error('Error al obtener documentos requeridos');
+    const data: DirectusListResponse<DirectusDocumentoRequerido> = await res.json();
+    const counts: Record<string, number> = {};
+    for (const doc of data.data) {
+      const status = doc.status || 'sinEstado';
+      counts[status] = (counts[status] || 0) + 1;
+    }
+    return Object.entries(counts).map(([status, count]) => ({ status, count }));
+  } catch (err) {
+    console.error('Error al hacer fetch de documentos requeridos:', err);
+    return [] as { status: string; count: number }[];
   }
 }
 
