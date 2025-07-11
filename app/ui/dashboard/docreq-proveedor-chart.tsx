@@ -19,11 +19,11 @@ interface DocReqData {
 export default function DocReqProveedorChart({ data }: { data: DocReqData[] }) {
   const chartData = useMemo(() => {
     const backgroundColors = [
-      '#f97316',
+      '#22c55e',
+      '#6b6580',
       '#6b7280',
+      '#f97316',
       '#ef4444',
-      '#10b981',
-      '#a855f7',
       '#facc15',
     ];
     return {
