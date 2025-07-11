@@ -20,7 +20,7 @@ export default function DocReqProveedorChart({ data }: { data: DocReqData[] }) {
   const chartData = useMemo(() => {
     const backgroundColors = [
       '#22c55e',
-      '#6b6580',
+      '#ded4d5',
       '#6b7280',
       '#f97316',
       '#ef4444',
