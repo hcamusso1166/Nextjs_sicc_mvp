@@ -539,4 +539,72 @@ export async function fetchFilteredCustomers(query: string) {
     throw new Error('Failed to fetch customer table.');
   }
 }
+export interface DocAPresentar {
+  id: string;
+  clienteId: string;
+  cliente: string;
+  siteId: string;
+  site: string;
+  requerimientoId: string;
+  requerimiento: string;
+  proveedorId: string;
+  proveedor: string;
+  tipo: 'proveedor' | 'persona' | 'vehiculo';
+}
 
+export async function fetchDocsAPresentar(): Promise<DocAPresentar[]> {
+  const docs: DocAPresentar[] = [];
+
+  async function fetchEndpoint(endpoint: string, tipo: 'proveedor' | 'persona' | 'vehiculo', fields: string) {
+    if (docs.length >= 5) return;
+    const params = new URLSearchParams();
+    params.append('filter[status][_eq]', 'toPresent');
+    params.append('sort', '-id');
+    params.append('limit', String(5 - docs.length));
+    params.append('fields', fields);
+    const res = await fetch(`${DIRECTUS_URL}/items/${endpoint}?${params.toString()}`, { cache: 'no-store', next: { tags: ['docsapresentar'] } });
+    if (!res.ok) return;
+    const data: DirectusListResponse<any> = await res.json();
+    for (const item of data.data) {
+      let prov: any = null;
+      if (tipo === 'proveedor') prov = item.idProveedor;
+      else if (tipo === 'persona') prov = item.idPersona?.idProveedor;
+      else prov = item.idVehiculo?.idProveedor;
+      if (!prov) continue;
+      const req = prov.idRequerimientos;
+      const site = req?.idSites;
+      const cli = site?.idCliente;
+      docs.push({
+        id: String(item.id),
+        clienteId: String(cli?.id ?? ''),
+        cliente: cli?.name ?? '',
+        siteId: String(site?.id ?? ''),
+        site: site?.nombre ?? '',
+        requerimientoId: String(req?.id ?? ''),
+        requerimiento: req?.nombre ?? '',
+        proveedorId: String(prov?.id ?? ''),
+        proveedor: prov?.nombre ?? '',
+        tipo,
+      });
+      if (docs.length >= 5) break;
+    }
+  }
+
+  await fetchEndpoint(
+    'DocumentosRequeridos',
+    'proveedor',
+    'id,idProveedor.id,idProveedor.nombre,idProveedor.idRequerimientos.id,idProveedor.idRequerimientos.nombre,idProveedor.idRequerimientos.idSites.id,idProveedor.idRequerimientos.idSites.nombre,idProveedor.idRequerimientos.idSites.idCliente.id,idProveedor.idRequerimientos.idSites.idCliente.name'
+  );
+  await fetchEndpoint(
+    'documentosRequeridosPersonas',
+    'persona',
+    'id,idPersona.idProveedor.id,idPersona.idProveedor.nombre,idPersona.idProveedor.idRequerimientos.id,idPersona.idProveedor.idRequerimientos.nombre,idPersona.idProveedor.idRequerimientos.idSites.id,idPersona.idProveedor.idRequerimientos.idSites.nombre,idPersona.idProveedor.idRequerimientos.idSites.idCliente.id,idPersona.idProveedor.idRequerimientos.idSites.idCliente.name'
+  );
+  await fetchEndpoint(
+    'documentosRequeridosVehiculos',
+    'vehiculo',
+    'id,idVehiculo.idProveedor.id,idVehiculo.idProveedor.nombre,idVehiculo.idProveedor.idRequerimientos.id,idVehiculo.idProveedor.idRequerimientos.nombre,idVehiculo.idProveedor.idRequerimientos.idSites.id,idVehiculo.idProveedor.idRequerimientos.idSites.nombre,idVehiculo.idProveedor.idRequerimientos.idSites.idCliente.id,idVehiculo.idProveedor.idRequerimientos.idSites.idCliente.name'
+  );
+
+  return docs.slice(0, 5);
+}

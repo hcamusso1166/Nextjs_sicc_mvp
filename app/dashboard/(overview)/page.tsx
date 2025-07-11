@@ -1,7 +1,7 @@
 
 import CardWrapper from '@/app/ui/dashboard/cards';
 import DocReqProveedor from '@/app/ui/dashboard/docreq-proveedor';
-import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
+import DocsAPresentar from '@/app/ui/dashboard/docs-a-presentar';
 import { lusitana } from '@/app/ui/fonts';
 import { Suspense } from 'react';
 import { RevenueChartSkeleton,  LatestInvoicesSkeleton, CardsSkeleton} from '@/app/ui/skeletons';
@@ -23,7 +23,7 @@ export default async function Page() {
           <DocReqProveedor />
         </Suspense>
         <Suspense fallback={<LatestInvoicesSkeleton />}>
-          <LatestInvoices />
+          <DocsAPresentar />
         </Suspense>
       </div>
     </main>

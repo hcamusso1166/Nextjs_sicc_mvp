@@ -10,7 +10,7 @@ export interface Proveedor {
 export default function ProveedorTable({ proveedor }: { proveedor: Proveedor }) {
   return (
     <div className="mb-4">
-      <p className="ml-2">Nombre: {proveedor.nombre}, CUIT: {proveedor.CUIT}, Fecha de Inicio: {proveedor.status}</p>
+      <p className="ml-2">Nombre: {proveedor.nombre}, CUIT: {proveedor.CUIT}, Estado: {proveedor.status}</p>
     </div>
   );  
 }
