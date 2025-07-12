@@ -83,8 +83,8 @@ export async function createCustomerSICC(formData: FormData) {
   const id = data?.data?.id as string | undefined;
   console.log('Create OK customer in Directus', id);
 
-  await revalidateTag('customersSICC');
-  await revalidatePath('/dashboard/customersSICC');
+  revalidateTag('customersSICC');
+  revalidatePath('/dashboard/customersSICC');
     if (id) {
     return redirect(`/dashboard/customersSICC/success?id=${id}`);
   }
