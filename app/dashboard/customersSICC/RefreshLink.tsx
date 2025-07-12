@@ -14,7 +14,7 @@ export default function RefreshLink({
 }) {
   const router = useRouter();
   const handleClick = useCallback(
-    (e: React.MouseEvent<HTMLAnchorElement>) => {
+     (e: React.MouseEvent<HTMLAnchorElement>) => {
       e.preventDefault();
       router.push(href);
       router.refresh();
@@ -23,7 +23,12 @@ export default function RefreshLink({
   );
 
   return (
-    <Link prefetch={false} href={href} onClick={handleClick} className={className}>
+     <Link
+      prefetch={false}
+      href={href}
+      onClick={handleClick}
+      className={className}
+    >
       {children}
     </Link>
   );
