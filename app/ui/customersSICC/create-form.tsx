@@ -80,11 +80,11 @@ export default function Form() {
             id="status"
             name="status"
             className="block w-full rounded-md border border-gray-200 p-2"
-            defaultValue="Publicado"
+            defaultValue="published"
           >
-            <option value="Publicado">Publicado</option>
-            <option value="Borrador">Borrador</option>
-            <option value="Archivado">Archivado</option>
+            <option value="published">Publicado</option>
+            <option value="draft">Borrador</option>
+            <option value="archived">Archivado</option>
           </select>
         </div>
       </div>
