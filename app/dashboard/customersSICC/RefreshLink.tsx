@@ -16,7 +16,7 @@ export default function RefreshLink({
   const handleClick = useCallback(
      (e: React.MouseEvent<HTMLAnchorElement>) => {
       e.preventDefault();
-      router.push(href);
+       router.push(href);
       startTransition(() => {
         router.refresh();
       });

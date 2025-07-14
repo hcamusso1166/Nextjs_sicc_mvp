@@ -73,7 +73,7 @@ export async function createCustomerSICC(formData: FormData) {
   };
 
   const response = await fetch(`${DIRECTUS_URL}/items/Clientes`, {
-    next: { revalidate: 10 },
+    next: { revalidate: 0 },
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
@@ -105,7 +105,7 @@ export async function updateCustomerSICC(id: string, formData: FormData) {
     urlSlug: slugify(name),
   };
 
-  await fetch(`${DIRECTUS_URL}/items/Clientes/${id}`, { next: { revalidate: 10 }  ,
+  await fetch(`${DIRECTUS_URL}/items/Clientes/${id}`, { next: { revalidate: 0 }  ,
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
@@ -116,7 +116,7 @@ export async function updateCustomerSICC(id: string, formData: FormData) {
 }
 
 export async function deleteCustomerSICC(id: string) {
-  await fetch(`${DIRECTUS_URL}/items/Clientes/${id}`, { next: { revalidate: 10 }  , method: 'DELETE' });
+  await fetch(`${DIRECTUS_URL}/items/Clientes/${id}`, { next: { revalidate: 0 }  , method: 'DELETE' });
   revalidateTag('customersSICC');
   revalidatePath('/dashboard/customersSICC' );
   return redirect('/dashboard/customersSICC');
@@ -132,7 +132,7 @@ export async function createSite(formData: FormData) {
   };
 
 const response = await fetch(`${DIRECTUS_URL}/items/sites`, {
-    next: { revalidate: 10 },
+    next: { revalidate: 0 },
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
@@ -158,7 +158,7 @@ export async function createSiteManager(formData: FormData) {
   };
 
   const response = await fetch(`${DIRECTUS_URL}/items/sites`, {
-    next: { revalidate: 10 },
+    next: { revalidate: 0 },
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
@@ -185,7 +185,7 @@ export async function createRequerimiento(formData: FormData) {
     urlSlug: slugify(nombre),
   };
   const response = await fetch(`${DIRECTUS_URL}/items/requerimiento`, {
-    next: { revalidate: 10 },
+    next: { revalidate: 0 },
     method: "POST",
       headers: { 'Content-Type': 'application/json' } ,    
       body: JSON.stringify(body),
@@ -211,7 +211,7 @@ export async function createRequerimientoManager(formData: FormData) {
     urlSlug: slugify(nombre),
   };
   const response = await fetch(`${DIRECTUS_URL}/items/requerimiento`, {
-    next: { revalidate: 10 },
+    next: { revalidate: 0 },
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
@@ -238,7 +238,7 @@ export async function createProveedor(formData: FormData) {
     urlSlug: slugify(nombre),
   };
   const response = await fetch(`${DIRECTUS_URL}/items/proveedor`, {
-    next: { revalidate: 10 },
+    next: { revalidate: 0 },
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
@@ -292,7 +292,7 @@ export async function generarDocumentosRequeridos(
           idParametro: param.id,
         };
         await fetch(`${DIRECTUS_URL}/items/DocumentosRequeridos`, {
-          next: { revalidate: 10 },
+          next: { revalidate: 0 },
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(body),
@@ -318,7 +318,7 @@ export async function createCustomer(formData: FormData) {
     urlSlug: slugify(name),
   };
 
-  await fetch(`${DIRECTUS_URL}/items/Clientes`, {next: { revalidate: 10 },
+  await fetch(`${DIRECTUS_URL}/items/Clientes`, {next: { revalidate: 0 },
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),

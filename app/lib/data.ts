@@ -169,7 +169,7 @@ export async function getCustomersSICC<T extends DirectusCustomer = DirectusCust
   try {
     const res = await fetch(url, {
       cache: 'no-store',
-      next: { tags: ['customersSICC'] , revalidate: 10},
+      next: { tags: ['customersSICC'] , revalidate: 0},
     });
     if (!res.ok) throw new Error("Error al obtener clientes");
     const data: DirectusListResponse<T> = await res.json();
@@ -184,7 +184,7 @@ export async function fetchCustomerSICCById<T extends DirectusCustomer = Directu
   try {
     const res = await fetch(`${DIRECTUS_URL}/items/Clientes/${id}`, {
       cache: 'no-store',
-      next: { tags: ['customersSICC'] , revalidate: 10 },
+      next: { tags: ['customersSICC'] , revalidate: 0 },
     });
     if (!res.ok) throw new Error('Error al obtener cliente');
     const data: { data: T } = await res.json();
@@ -198,7 +198,7 @@ export async function fetchSiteById<T extends DirectusSite = DirectusSite>(id: s
   try {
     const res = await fetch(`${DIRECTUS_URL}/items/sites/${id}`, {
       cache: 'no-store',
-      next: { tags: ['sites'] , revalidate: 10 },
+      next: { tags: ['sites'] , revalidate: 0 },
     });
     if (!res.ok) throw new Error('Error al obtener site');
     const data: { data: T } = await res.json();
@@ -212,7 +212,7 @@ export async function fetchRequerimientoById<T extends DirectusSite = DirectusSi
   try {
     const res = await fetch(`${DIRECTUS_URL}/items/requerimiento/${id}`, {
       cache: 'no-store',
-      next: { tags: ['sites'] , revalidate: 10 },
+      next: { tags: ['sites'] , revalidate: 0 },
     });
     if (!res.ok) throw new Error('Error al obtener site');
     const data: { data: T } = await res.json();
@@ -265,7 +265,7 @@ export async function fetchProveedorById<T extends DirectusProveedor = DirectusP
   try {
     const res = await fetch(`${DIRECTUS_URL}/items/proveedor/${id}`, {
       cache: 'no-store',
-      next: { tags: ['proveedores'] , revalidate: 10 },
+      next: { tags: ['proveedores'] , revalidate: 0 },
     });
     if (!res.ok) throw new Error('Error al obtener proveedor');
     const data: { data: T } = await res.json();
