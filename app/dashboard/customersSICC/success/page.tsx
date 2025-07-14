@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import Link from 'next/link';
 import RefreshLink from '../RefreshLink';
 import { fetchCustomerSICCById } from '@/app/lib/data';
