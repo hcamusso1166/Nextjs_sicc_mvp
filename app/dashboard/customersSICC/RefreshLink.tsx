@@ -1,6 +1,6 @@
 'use client'
 import { useRouter } from 'next/navigation';
-import { useCallback } from 'react';
+import { useCallback, startTransition } from 'react';
 import Link from 'next/link';
 
 export default function RefreshLink({
@@ -17,7 +17,9 @@ export default function RefreshLink({
      (e: React.MouseEvent<HTMLAnchorElement>) => {
       e.preventDefault();
       router.push(href);
-      router.refresh();
+      startTransition(() => {
+        router.refresh();
+      });
     },
     [router, href],
   );
