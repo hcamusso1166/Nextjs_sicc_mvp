@@ -2,7 +2,7 @@
 
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
-import Link from 'next/link';
+import RefreshLink from '@/app/ui/refresh-link';
 import { generatePagination } from '@/app/lib/utils';
 import { usePathname, useSearchParams } from 'next/navigation';
 
@@ -84,9 +84,9 @@ function PaginationNumber({
   return isActive || position === 'middle' ? (
     <div className={className}>{page}</div>
   ) : (
-    <Link href={href} className={className}>
+    <RefreshLink href={href} className={className}>
       {page}
-    </Link>
+    </RefreshLink>
   );
 }
 
@@ -119,8 +119,8 @@ function PaginationArrow({
   return isDisabled ? (
     <div className={className}>{icon}</div>
   ) : (
-    <Link className={className} href={href}>
+    <RefreshLink className={className} href={href}>
       {icon}
-    </Link>
+    </RefreshLink>
   );
 }

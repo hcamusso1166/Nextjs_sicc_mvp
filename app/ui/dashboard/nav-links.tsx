@@ -7,7 +7,7 @@ import {
   EyeIcon,
   PencilSquareIcon,
 } from '@heroicons/react/24/outline';
-import Link from 'next/link';
+import RefreshLink from '@/app/ui/refresh-link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 
@@ -29,7 +29,7 @@ export default function NavLinks() {
       {links.map((link) => {
         const LinkIcon = link.icon;
         return (
-          <Link
+          <RefreshLink
             key={link.name}
             href={link.href}
             className={clsx(
@@ -41,7 +41,7 @@ export default function NavLinks() {
           >
             <LinkIcon className="w-6" />
             <p className="hidden md:block">{link.name}</p>
-          </Link>
+          </RefreshLink>
         );
       })}
     </>

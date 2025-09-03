@@ -1,5 +1,5 @@
 import { clsx } from 'clsx';
-import Link from 'next/link';
+import RefreshLink from '@/app/ui/refresh-link';
 import { lusitana } from '@/app/ui/fonts';
 
 interface Breadcrumb {
@@ -18,7 +18,7 @@ export default function Breadcrumbs({ breadcrumbs }: { breadcrumbs: Breadcrumb[]
             aria-current={breadcrumb.active}
             className={clsx(breadcrumb.active ? 'text-gray-900' : 'text-gray-500')}
           >
-            <Link prefetch={false} href={breadcrumb.href}>{breadcrumb.label}</Link>
+            <RefreshLink href={breadcrumb.href}>{breadcrumb.label}</RefreshLink>
             {index < breadcrumbs.length - 1 ? (
               <span className="mx-3 inline-block">/</span>
             ) : null}

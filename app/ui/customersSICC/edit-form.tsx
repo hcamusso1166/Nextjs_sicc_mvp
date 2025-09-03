@@ -1,5 +1,4 @@
-
-import Link from 'next/link';
+import RefreshLink from '@/app/ui/refresh-link';
 import { Button } from '@/app/ui/button';
 import { updateCustomerSICC } from '@/app/lib/actions';
 import { DirectusCustomer } from '@/app/lib/definitions';
@@ -98,21 +97,21 @@ export default function Form({ customer }: { customer: DirectusCustomer }) {
         </div>
       </div>
       <div className="mt-6 flex justify-end">
-        <Link
+        <RefreshLink
           href={`/dashboard/customersSICC/sites?customerId=${customer.id}`}
           className="rounded bg-blue-600 px-4 py-2 text-white text-sm hover:bg-blue-500"
         >
           Crear SITE
-        </Link>
+        </RefreshLink>
       </div>
       <div className="mt-6 flex justify-end gap-4">
-        <Link
+        <RefreshLink
           href="/dashboard/customersSICC"
           className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
           prefetch={false}
         >
           Cancelar
-        </Link>
+        </RefreshLink>
         <Button type="submit">Guardar Cambios</Button>
       </div>
     </form>

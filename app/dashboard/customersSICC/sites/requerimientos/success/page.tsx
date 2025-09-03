@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import RefreshLink from '@/app/ui/refresh-link';
 import { fetchRequerimientoById,fetchSiteById, fetchCustomerSICCById } from '@/app/lib/data';
 
 export default async function Page({
@@ -20,16 +20,15 @@ export default async function Page({
         <strong>{customer?.name || ''}</strong> registrada con éxito.
       </div>
       <div className="flex gap-4">
-          <Link prefetch={false} href="/dashboard/customersSICC" className="underline">
+        <RefreshLink href="/dashboard/customersSICC" className="underline">
           Volver
-        </Link>
-        <Link
-          prefetch={false}
+        </RefreshLink>
+        <RefreshLink
           href={`/dashboard/customersSICC/sites/requerimientos?siteId=${siteId}`}
           className="underline"
         >
           Crear Requerimiento
-        </Link>
+        </RefreshLink>
       </div>
     </main>
   );

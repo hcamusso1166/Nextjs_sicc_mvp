@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import RefreshLink from '@/app/ui/refresh-link';
 import { Button } from '@/app/ui/button';
 import { createProveedor } from '@/app/lib/actions';
 
@@ -40,12 +40,12 @@ export default function CreateProveedorForm({
         </div>
       </div>
       <div className="mt-6 flex justify-end gap-4">
-        <Link
+        <RefreshLink
           href={cancelHref}
           className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 hover:bg-gray-200"
         >
           Cancelar
-        </Link>
+        </RefreshLink>
         <Button type="submit">Crear Proveedor</Button>
       </div>
     </form>
