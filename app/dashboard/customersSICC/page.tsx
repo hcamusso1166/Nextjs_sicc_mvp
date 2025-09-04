@@ -6,7 +6,7 @@ import Search from '@/app/ui/search';
 import { fetchCustomersSICCPages } from '@/app/lib/data';
 import { Suspense } from 'react';
 import { lusitana } from '@/app/ui/fonts';
-import RefreshOnMount from '@/app/ui/refresh-on-mount';
+
 
 export default async function Page(props: {
   searchParams?: Promise<{
@@ -20,7 +20,7 @@ export default async function Page(props: {
   const totalPages = await fetchCustomersSICCPages(query);
   return (
     <div className="w-full">
-      <RefreshOnMount />
+
       <div className="flex w-full items-center justify-between">
         <h1 className={`${lusitana.className} text-2xl`}>Clientes</h1>
       </div>

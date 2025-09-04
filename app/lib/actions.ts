@@ -86,10 +86,7 @@ export async function createCustomerSICC(formData: FormData) {
   revalidateTag('customersSICC');
   revalidatePath('/dashboard/customersSICC');
   revalidatePath('/', 'layout');
-    if (id) {
-    return redirect(`/dashboard/customersSICC/success?id=${id}`);
-  }
-  return redirect('/dashboard/customersSICC');
+  redirect('/dashboard/customersSICC');
 }
 
 export async function updateCustomerSICC(id: string, formData: FormData) {
