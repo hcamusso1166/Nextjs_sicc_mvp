@@ -168,8 +168,7 @@ export async function getCustomersSICC<T extends DirectusCustomer = DirectusCust
   const url = `${DIRECTUS_URL}/items/Clientes?page=${currentPage}&limit=${ITEMS_PER_PAGE}&sort=name${query ? `&filter[name][_contains]=${encodeURIComponent(query)}` : ''}`;
   try {
     const res = await fetch(url, {
-      cache: 'no-store',
-      next: { tags: ['customersSICC'] , revalidate: 0},
+      next: { tags: ['customersSICC'] },
     });
     if (!res.ok) throw new Error("Error al obtener clientes");
     const data: DirectusListResponse<T> = await res.json();
