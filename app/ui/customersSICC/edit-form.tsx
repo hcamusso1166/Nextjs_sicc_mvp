@@ -90,9 +90,9 @@ export default function Form({ customer }: { customer: DirectusCustomer }) {
             className="block w-full rounded-md border border-gray-200 p-2"
             defaultValue={customer.status}
           >
-            <option value="Publicado">Publicado</option>
-            <option value="Borrador">Borrador</option>
-            <option value="Archivado">Archivado</option>
+            <option value="published">Publicado</option>
+            <option value="draft">Borrador</option>
+            <option value="archived">Archivado</option>
           </select>
         </div>
       </div>
@@ -108,7 +108,6 @@ export default function Form({ customer }: { customer: DirectusCustomer }) {
         <RefreshLink
           href="/dashboard/customersSICC"
           className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
-          prefetch={false}
         >
           Cancelar
         </RefreshLink>

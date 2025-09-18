@@ -110,7 +110,7 @@ export async function updateCustomerSICC(id: string, formData: FormData) {
   });
   revalidateTag('customersSICC');
   revalidateTag('customers');
-  revalidatePath('/dashboard/manager');
+  revalidatePath('/dashboard/customersSICC');
   return redirect('/dashboard/customersSICC');
 }
 
