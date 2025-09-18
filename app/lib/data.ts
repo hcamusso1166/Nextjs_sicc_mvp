@@ -168,6 +168,7 @@ export async function getCustomersSICC<T extends DirectusCustomer = DirectusCust
   const url = `${DIRECTUS_URL}/items/Clientes?page=${currentPage}&limit=${ITEMS_PER_PAGE}&sort=name${query ? `&filter[name][_contains]=${encodeURIComponent(query)}` : ''}`;
   try {
     const res = await fetch(url, {
+            cache: 'no-store',
       next: { tags: ['customersSICC'] },
     });
     if (!res.ok) throw new Error("Error al obtener clientes");
@@ -225,7 +226,7 @@ export async function fetchRequerimientoById<T extends DirectusSite = DirectusSi
 export async function fetchSitesByCustomer<T extends DirectusSite = DirectusSite>(customerId: string): Promise<T[]> {
   const url = `${DIRECTUS_URL}/items/sites?filter%5BidCliente%5D%5B_eq%5D=${customerId}`;
   try {
-    const res = await fetch(url, { cache: 'no-store', next: { tags: ['sites'] , revalidate:10} });
+    const res = await fetch(url, { cache: 'no-store', next: { tags: ['sites'] } });
     if (!res.ok) throw new Error('Error al obtener sites');
     const data: DirectusListResponse<T> = await res.json();
     return data.data;
@@ -238,7 +239,7 @@ export async function fetchSitesByCustomer<T extends DirectusSite = DirectusSite
 export async function fetchRequerimientosBySite<T extends DirectusRequerimiento = DirectusRequerimiento>(siteId: string): Promise<T[]> {
   const url = `${DIRECTUS_URL}/items/requerimiento?filter%5BidSites%5D%5B_eq%5D=${siteId}`;
   try {
-    const res = await fetch(url, { cache: 'no-store', next: { tags: ['requerimientos'],revalidate:10 } });
+    const res = await fetch(url, { cache: 'no-store', next: { tags: ['requerimientos'] } });
     if (!res.ok) throw new Error('Error al obtener requerimientos');
     const data: DirectusListResponse<T> = await res.json();
     return data.data;
@@ -251,7 +252,7 @@ export async function fetchRequerimientosBySite<T extends DirectusRequerimiento 
 export async function fetchProveedoresByRequerimiento<T extends DirectusProveedor = DirectusProveedor>(reqId: string): Promise<T[]> {
   const url = `${DIRECTUS_URL}/items/proveedor?filter%5BidRequerimientos%5D%5B_eq%5D=${reqId}`;
   try {
-    const res = await fetch(url, { cache: 'no-store', next: { tags: ['proveedores'] , revalidate:10} });
+    const res = await fetch(url, { cache: 'no-store', next: { tags: ['proveedores'] } });
     if (!res.ok) throw new Error('Error al obtener proveedores');
     const data: DirectusListResponse<T> = await res.json();
     return data.data;
@@ -264,7 +265,7 @@ export async function fetchProveedorById<T extends DirectusProveedor = DirectusP
   try {
     const res = await fetch(`${DIRECTUS_URL}/items/proveedor/${id}`, {
       cache: 'no-store',
-      next: { tags: ['proveedores'] , revalidate: 0 },
+      next: { tags: ['proveedores'] },
     });
     if (!res.ok) throw new Error('Error al obtener proveedor');
     const data: { data: T } = await res.json();
@@ -278,7 +279,7 @@ export async function fetchProveedorById<T extends DirectusProveedor = DirectusP
 export async function fetchPersonasByProveedor<T = any>(provId: string): Promise<T[]> {
   const url = `${DIRECTUS_URL}/items/persona?filter%5BidProveedor%5D%5B_eq%5D=${provId}`;
   try {
-    const res = await fetch(url, { cache: 'no-store', next: { tags: ['personas'] , revalidate:10} });
+    const res = await fetch(url, { cache: 'no-store', next: { tags: ['personas'] } });
     if (!res.ok) throw new Error('Error al obtener personas');
     const data: DirectusListResponse<T> = await res.json();
     return data.data;
@@ -291,7 +292,7 @@ export async function fetchPersonasByProveedor<T = any>(provId: string): Promise
 export async function fetchVehiculosByProveedor<T = any>(provId: string): Promise<T[]> {
   const url = `${DIRECTUS_URL}/items/vehiculo?filter%5BidProveedor%5D%5B_eq%5D=${provId}`;
   try {
-    const res = await fetch(url, { cache: 'no-store', next: { tags: ['vehiculos'],revalidate:10 } });
+    const res = await fetch(url, { cache: 'no-store', next: { tags: ['vehiculos'] } });
     if (!res.ok) throw new Error('Error al obtener vehiculos');
     const data: DirectusListResponse<T> = await res.json();
     return data.data;
@@ -303,7 +304,7 @@ export async function fetchVehiculosByProveedor<T = any>(provId: string): Promis
 export async function fetchDocumentosByProveedor<T = any>(provId: string): Promise<T[]> {
   const url = `${DIRECTUS_URL}/items/DocumentosRequeridos?filter%5BidProveedor%5D%5B_eq%5D=${provId}`;
   try {
-    const res = await fetch(url, { cache: 'no-store', next: { tags: ['documentos'],revalidate:10 } });
+    const res = await fetch(url, { cache: 'no-store', next: { tags: ['documentos'] } });
     if (!res.ok) throw new Error('Error al obtener documentos');
     const data: DirectusListResponse<T> = await res.json();
     return data.data;
@@ -315,7 +316,7 @@ export async function fetchDocumentosByProveedor<T = any>(provId: string): Promi
 export async function fetchDocumentosByPersona<T = any>(personaId: string): Promise<T[]> {
   const url = `${DIRECTUS_URL}/items/documentosRequeridosPersonas/${personaId}`;
   try {
-    const res = await fetch(url, { cache: 'no-store', next: { tags: ['documentospersona'],revalidate:10 } });
+    const res = await fetch(url, { cache: 'no-store', next: { tags: ['documentospersona']} });
     if (!res.ok) throw new Error('Error al obtener documentos de persona');
     const data: any = await res.json();
     const docs = Array.isArray(data.data) ? data.data : data.data ? [data.data] : [];
@@ -329,7 +330,7 @@ export async function fetchDocumentosByPersona<T = any>(personaId: string): Prom
 export async function fetchDocumentosByVehiculo<T = any>(vehiculoId: string): Promise<T[]> {
   const url = `${DIRECTUS_URL}/items/documentosRequeridosVehiculos/${vehiculoId}`;
   try {
-    const res = await fetch(url, { cache: 'no-store', next: { tags: ['documentosvehiculo'],revalidate:10 } });
+    const res = await fetch(url, { cache: 'no-store', next: { tags: ['documentosvehiculo'] } });
     if (!res.ok) throw new Error('Error al obtener documentos de vehiculo');
     const data: any = await res.json();
     const docs = Array.isArray(data.data) ? data.data : data.data ? [data.data] : [];
@@ -387,7 +388,7 @@ export async function fetchCustomersSICCPages<T extends DirectusCustomer = Direc
   const url = `${DIRECTUS_URL}/items/Clientes?limit=1&meta=filter_count${query ? `&filter[name][_contains]=${encodeURIComponent(query)}` : ''}`;
   try {
     const res = await fetch(url, {
-      cache: 'no-store',
+      cache: 'no-cache',
       next: { tags: ['customersSICC'] },
     });
     if (!res.ok) throw new Error('Error al obtener total de clientes');
@@ -406,7 +407,7 @@ export async function getCustomers<T extends DirectusCustomer = DirectusCustomer
 ): Promise<T[]> {
   const url = `${DIRECTUS_URL}/items/Clientes?page=${currentPage}&limit=${ITEMS_PER_PAGE}&sort=name${query ? `&filter[name][_contains]=${encodeURIComponent(query)}` : ''}`;
   try {
-    const res = await fetch(url, { cache: 'no-store', next: { tags: ['customers'],revalidate:10 } });
+    const res = await fetch(url, { cache: 'no-store', next: { tags: ['customers'] } });
     if (!res.ok) throw new Error('Error al obtener clientes');
     const data: DirectusListResponse<T> = await res.json();
     return data.data;
@@ -418,7 +419,7 @@ export async function getCustomers<T extends DirectusCustomer = DirectusCustomer
 
 export async function fetchCustomerById<T extends DirectusCustomer = DirectusCustomer>(id: string): Promise<T | null> {
   try {
-    const res = await fetch(`${DIRECTUS_URL}/items/Clientes/${id}`, { cache: 'no-store', next: { tags: ['customers'],revalidate:10 } });
+    const res = await fetch(`${DIRECTUS_URL}/items/Clientes/${id}`, { cache: 'no-store', next: { tags: ['customers']} });
     if (!res.ok) throw new Error('Error al obtener cliente');
     const data: { data: T } = await res.json();
     return data.data;

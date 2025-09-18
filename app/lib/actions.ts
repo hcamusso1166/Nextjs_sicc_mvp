@@ -84,6 +84,7 @@ export async function createCustomerSICC(formData: FormData) {
   console.log('Create OK customer in Directus', id);
 
   revalidateTag('customersSICC');
+  revalidateTag('customers');
   revalidatePath('/dashboard/customersSICC');
   revalidatePath('/', 'layout');
   redirect('/dashboard/customersSICC');
@@ -108,6 +109,7 @@ export async function updateCustomerSICC(id: string, formData: FormData) {
     body: JSON.stringify(body),
   });
   revalidateTag('customersSICC');
+  revalidateTag('customers');
   revalidatePath('/dashboard/manager');
   return redirect('/dashboard/customersSICC');
 }
@@ -115,6 +117,7 @@ export async function updateCustomerSICC(id: string, formData: FormData) {
 export async function deleteCustomerSICC(id: string) {
   await fetch(`${DIRECTUS_URL}/items/Clientes/${id}`, { next: { revalidate: 0 }  , method: 'DELETE' });
   revalidateTag('customersSICC');
+  revalidateTag('customers');
   revalidatePath('/dashboard/customersSICC' );
   return redirect('/dashboard/customersSICC');
 }
