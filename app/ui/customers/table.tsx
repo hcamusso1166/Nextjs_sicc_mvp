@@ -1,3 +1,4 @@
+export const revalidate = 0;
 import { lusitana } from '@/app/ui/fonts';
 import { DeleteCustomer, UpdateCustomer } from '@/app/ui/customers/buttons';
 import { getCustomers } from '@/app/lib/data';

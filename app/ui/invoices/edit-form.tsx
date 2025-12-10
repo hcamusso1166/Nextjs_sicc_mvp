@@ -7,9 +7,21 @@ import {
   CurrencyDollarIcon,
   UserCircleIcon,
 } from '@heroicons/react/24/outline';
-import Link from 'next/link';
 import { Button } from '@/app/ui/button';
+import RefreshLink from '@/app/ui/refresh-link';
 import { updateInvoice } from '@/app/lib/actions';
+import { useFormStatus } from 'react-dom';
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button type="submit" aria-live="polite" aria-busy={pending} disabled={pending}>
+      {pending ? 'Actualizando datos...' : 'Edit Invoice'}
+    </Button>
+  );
+}
+
 export default function EditInvoiceForm({
   invoice,
   customers,
@@ -17,9 +29,8 @@ export default function EditInvoiceForm({
   invoice: InvoiceForm;
   customers: CustomerField[];
 }) {
-    const updateInvoiceWithId = updateInvoice.bind(null, invoice.id);
- 
- 
+  const updateInvoiceWithId = updateInvoice.bind(null, invoice.id);
+
   return (
     <form action={updateInvoiceWithId}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
@@ -113,13 +124,13 @@ export default function EditInvoiceForm({
         </fieldset>
       </div>
       <div className="mt-6 flex justify-end gap-4">
-        <Link
+        <RefreshLink
           href="/dashboard/invoices"
           className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
         >
           Cancel
-        </Link>
-        <Button type="submit">Edit Invoice</Button>
+        </RefreshLink>
+        <SubmitButton />
       </div>
     </form>
   );

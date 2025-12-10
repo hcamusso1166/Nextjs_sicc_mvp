@@ -1,3 +1,4 @@
+export const revalidate = 0;
 import { fetchSitesByCustomer } from '@/app/lib/data';
 import { Suspense } from 'react';
 import RequerimientosListManager from './RequerimientosListManager';

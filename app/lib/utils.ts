@@ -1,4 +1,60 @@
 import { Revenue } from './definitions';
+export type DirectusRequestInit = RequestInit & {
+  logContext?: string;
+  next?: { revalidate?: number; tags?: string[] };
+};
+
+export function logDirectusRequest(details: {
+  context?: string;
+  url: string;
+  method?: string;
+  status?: number;
+  durationMs: number;
+  error?: string;
+  ok?: boolean;
+}) {
+  console.log(
+    JSON.stringify({
+      event: 'directus_fetch',
+      context: details.context ?? 'directus',
+      url: details.url,
+      method: details.method ?? 'GET',
+      status: details.status,
+      durationMs: details.durationMs,
+      ok: details.ok,
+      error: details.error,
+    }),
+  );
+}
+
+export async function directusFetch(
+  url: string,
+  init: DirectusRequestInit = {},
+): Promise<Response> {
+  const { logContext, ...fetchInit } = init;
+  const startedAt = Date.now();
+  try {
+    const response = await fetch(url, fetchInit);
+    logDirectusRequest({
+      context: logContext,
+      url,
+      method: fetchInit.method,
+      status: response.status,
+      ok: response.ok,
+      durationMs: Date.now() - startedAt,
+    });
+    return response;
+  } catch (error) {
+    logDirectusRequest({
+      context: logContext,
+      url,
+      method: fetchInit.method,
+      durationMs: Date.now() - startedAt,
+      error: error instanceof Error ? error.message : String(error),
+    });
+    throw error;
+  }
+}
 
 export const formatCurrency = (amount: number) => {
   return (amount / 100).toLocaleString('en-US', {

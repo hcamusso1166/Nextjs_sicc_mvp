@@ -1,3 +1,4 @@
+export const revalidate = 0;
 import { fetchProveedoresByRequerimiento } from '@/app/lib/data';
 import { Suspense } from 'react';
 import ProveedorItem from './ProveedorItem';

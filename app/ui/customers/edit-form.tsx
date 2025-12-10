@@ -1,7 +1,7 @@
-import Link from 'next/link';
 import { Button } from '@/app/ui/button';
 import { updateCustomer } from '@/app/lib/actions';
 import { DirectusCustomer } from '@/app/lib/definitions';
+import RefreshLink from '@/app/ui/refresh-link';
 
 export default function Form({ customer }: { customer: DirectusCustomer }) {
   const update = updateCustomer.bind(null, customer.id);
@@ -94,12 +94,12 @@ export default function Form({ customer }: { customer: DirectusCustomer }) {
         </div>
       </div>
       <div className="mt-6 flex justify-end gap-4">
-        <Link
+        <RefreshLink
           href="/dashboard/customers"
           className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
         >
           Cancelar
-        </Link>
+        </RefreshLink>
         <Button type="submit">Guardar Cambios</Button>
       </div>
     </form>

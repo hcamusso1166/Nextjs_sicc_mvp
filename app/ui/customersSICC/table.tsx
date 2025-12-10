@@ -1,3 +1,4 @@
+export const revalidate = 0;
 import { lusitana } from '@/app/ui/fonts';
 import { DeleteCustomerSICC, UpdateCustomerSICC } from '@/app/ui/customersSICC/buttons';
 import { getCustomersSICC } from '@/app/lib/data';

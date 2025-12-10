@@ -1,3 +1,4 @@
+export const revalidate = 0;
 import { Suspense } from 'react';
 import {
   fetchPersonasByProveedor,
