@@ -103,22 +103,26 @@ export async function fetchDashboardCounts() {
       { url: `${DIRECTUS_URL}/items/proveedor?limit=1&meta=filter_count`, tag: 'proveedores' },
     ];
 
-    const responses = await Promise.all(
-      endpoints.map((e) =>
-        directusFetch(e.url, {
-          cache: 'no-store',
-          next: { tags: [e.tag] },
-          logContext: `fetchDashboardCounts:${e.tag}`,
-        }),
-      ),
+    const countsResults = await Promise.allSettled(
+      endpoints.map(async (e) => {
+        try {
+          const res = await directusFetch(e.url, {
+            cache: 'no-store',
+            next: { tags: [e.tag] },
+            logContext: `fetchDashboardCounts:${e.tag}`,
+          });
+          if (!res.ok) return 0;
+          const data: DirectusListResponse<any> = await res.json();
+          return data?.meta?.filter_count ?? 0;
+        } catch (err) {
+          console.error('Error fetching dashboard count', e.tag, err);
+          return 0;
+        }
+      }),
     );
 
-    const counts = await Promise.all(
-      responses.map(async (res) => {
-        if (!res.ok) return 0;
-        const data: DirectusListResponse<any> = await res.json();
-        return data?.meta?.filter_count ?? 0;
-      }),
+    const counts = countsResults.map((result) =>
+      result.status === 'fulfilled' ? result.value : 0,
     );
 
     const [clientes, sites, requerimientos, proveedores] = counts;
@@ -573,31 +577,35 @@ export async function fetchDocsAPresentar(): Promise<DocAPresentar[]> {
     params.append('sort', '-id');
     params.append('limit', String(5 - docs.length));
     params.append('fields', fields);
-    const res = await directusFetch(`${DIRECTUS_URL}/items/${endpoint}?${params.toString()}`, { cache: 'no-store', next: { tags: ['docsapresentar'] }, logContext: `fetchDocsAPresentar:${endpoint}` });
-    if (!res.ok) return;
-    const data: DirectusListResponse<any> = await res.json();
-    for (const item of data.data) {
-      let prov: any = null;
-      if (tipo === 'proveedor') prov = item.idProveedor;
-      else if (tipo === 'persona') prov = item.idPersona?.idProveedor;
-      else prov = item.idVehiculo?.idProveedor;
-      if (!prov) continue;
-      const req = prov.idRequerimientos;
-      const site = req?.idSites;
-      const cli = site?.idCliente;
-      docs.push({
-        id: String(item.id),
-        clienteId: String(cli?.id ?? ''),
-        cliente: cli?.name ?? '',
-        siteId: String(site?.id ?? ''),
-        site: site?.nombre ?? '',
-        requerimientoId: String(req?.id ?? ''),
-        requerimiento: req?.nombre ?? '',
-        proveedorId: String(prov?.id ?? ''),
-        proveedor: prov?.nombre ?? '',
-        tipo,
-      });
-      if (docs.length >= 5) break;
+        try {
+      const res = await directusFetch(`${DIRECTUS_URL}/items/${endpoint}?${params.toString()}`, { cache: 'no-store', next: { tags: ['docsapresentar'] }, logContext: `fetchDocsAPresentar:${endpoint}` });
+      if (!res.ok) return;
+      const data: DirectusListResponse<any> = await res.json();
+      for (const item of data.data) {
+        let prov: any = null;
+        if (tipo === 'proveedor') prov = item.idProveedor;
+        else if (tipo === 'persona') prov = item.idPersona?.idProveedor;
+        else prov = item.idVehiculo?.idProveedor;
+        if (!prov) continue;
+        const req = prov.idRequerimientos;
+        const site = req?.idSites;
+        const cli = site?.idCliente;
+        docs.push({
+          id: String(item.id),
+          clienteId: String(cli?.id ?? ''),
+          cliente: cli?.name ?? '',
+          siteId: String(site?.id ?? ''),
+          site: site?.nombre ?? '',
+          requerimientoId: String(req?.id ?? ''),
+          requerimiento: req?.nombre ?? '',
+          proveedorId: String(prov?.id ?? ''),
+          proveedor: prov?.nombre ?? '',
+          tipo,
+        });
+        if (docs.length >= 5) break;
+      }
+    } catch (err) {
+      console.error('Error fetching docs to present from', endpoint, err);
     }
   }
 
