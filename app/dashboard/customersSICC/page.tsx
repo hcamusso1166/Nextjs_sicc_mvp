@@ -1,4 +1,5 @@
 export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
 import Pagination from '@/app/ui/customersSICC/pagination';
 import CustomersSICCTable from '@/app/ui/customersSICC/table';
 import { CreateCustomerSICC } from '@/app/ui/customersSICC/buttons';

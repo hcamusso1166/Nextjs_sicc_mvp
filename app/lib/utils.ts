@@ -32,13 +32,17 @@ export async function directusFetch(
   init: DirectusRequestInit = {},
 ): Promise<Response> {
   const { logContext, ...fetchInit } = init;
+  const normalizedInit = {
+    cache: fetchInit.cache ?? 'no-store',
+    ...fetchInit,
+  } satisfies RequestInit;
   const startedAt = Date.now();
   try {
-    const response = await fetch(url, fetchInit);
+    const response = await fetch(url, normalizedInit);
     logDirectusRequest({
       context: logContext,
       url,
-      method: fetchInit.method,
+      method: normalizedInit.method,
       status: response.status,
       ok: response.ok,
       durationMs: Date.now() - startedAt,
@@ -48,7 +52,7 @@ export async function directusFetch(
     logDirectusRequest({
       context: logContext,
       url,
-      method: fetchInit.method,
+      method: normalizedInit.method,
       durationMs: Date.now() - startedAt,
       error: error instanceof Error ? error.message : String(error),
     });

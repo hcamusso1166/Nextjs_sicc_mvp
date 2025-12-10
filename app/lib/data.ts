@@ -402,7 +402,7 @@ export async function fetchCustomersSICCPages<T extends DirectusCustomer = Direc
   const url = `${DIRECTUS_URL}/items/Clientes?limit=1&meta=filter_count${query ? `&filter[name][_contains]=${encodeURIComponent(query)}` : ''}`;
   try {
     const res = await directusFetch(url, {
-      cache: 'no-cache',
+      cache: 'no-store',
       next: { tags: ['customersSICC'] },
       logContext: 'fetchCustomersSICCPages',
     });
