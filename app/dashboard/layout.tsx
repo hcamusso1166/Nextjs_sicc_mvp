@@ -1,6 +1,8 @@
 import SideNav from '@/app/ui/dashboard/sidenav';
 
-export const experimental_ppr = true;
+// Opt out of Partial Prerendering for the dashboard to avoid serving
+// any cached HTML or data after CRUD operations.
+export const experimental_ppr = false;
 export const dynamic = 'force-dynamic';
 export const fetchCache = 'force-no-store';
 

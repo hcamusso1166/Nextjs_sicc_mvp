@@ -1,8 +1,11 @@
+export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
 export const revalidate = 0;
 import { lusitana } from '@/app/ui/fonts';
 import { DeleteCustomerSICC, UpdateCustomerSICC } from '@/app/ui/customersSICC/buttons';
 import { getCustomersSICC } from '@/app/lib/data';
 import { DirectusCustomer } from '@/app/lib/definitions';
+import { unstable_noStore as noStore } from 'next/cache';
 
 export default async function CustomersSICCTable({
   query,
@@ -11,6 +14,7 @@ export default async function CustomersSICCTable({
   query: string;
   currentPage: number;
 }) {
+  noStore();
   const customers = await getCustomersSICC<DirectusCustomer>(query, currentPage);
 
   return (

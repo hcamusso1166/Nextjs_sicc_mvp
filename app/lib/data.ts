@@ -16,6 +16,7 @@ import {
   DirectusDocumentoRequerido,
 } from './definitions';
 import { directusFetch, formatCurrency } from './utils';
+import { unstable_noStore as noStore } from 'next/cache';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 export const DIRECTUS_URL =
@@ -173,6 +174,7 @@ export async function getCustomersSICC<T extends DirectusCustomer = DirectusCust
   query = "",
   currentPage = 1,
 ): Promise<T[]> {
+  noStore();
   const url = `${DIRECTUS_URL}/items/Clientes?page=${currentPage}&limit=${ITEMS_PER_PAGE}&sort=name${query ? `&filter[name][_contains]=${encodeURIComponent(query)}` : ''}`;
   try {
     const res = await directusFetch(url, {
@@ -190,6 +192,7 @@ export async function getCustomersSICC<T extends DirectusCustomer = DirectusCust
 }
 
 export async function fetchCustomerSICCById<T extends DirectusCustomer = DirectusCustomer>(id: string): Promise<T | null> {
+  noStore();
   try {
     const res = await directusFetch(`${DIRECTUS_URL}/items/Clientes/${id}`, {
       cache: 'no-store',
@@ -399,6 +402,7 @@ export async function fetchTipoDocumento(id: string) {
 }
 
 export async function fetchCustomersSICCPages<T extends DirectusCustomer = DirectusCustomer>(query = "") {
+  noStore();
   const url = `${DIRECTUS_URL}/items/Clientes?limit=1&meta=filter_count${query ? `&filter[name][_contains]=${encodeURIComponent(query)}` : ''}`;
   try {
     const res = await directusFetch(url, {
